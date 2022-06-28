@@ -1,0 +1,437 @@
+<!doctype html>
+<html class="no-js" lang="en">
+  <head><meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1"/>
+    <meta name="color-scheme" content="light dark"><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<link rel="index" title="Index" href="../../genindex.html" /><link rel="search" title="Search" href="../../search.html" /><link rel="next" title="measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography" href="measure_adj.html" /><link rel="prev" title="Receiver Function Forward simulation with Specfem3D_FWATR" href="rf_fwd.html" />
+
+    <link rel="shortcut icon" href="../../_static/logo.ico"/><meta name="generator" content="sphinx-5.0.2, furo 2022.06.21"/>
+        <title>Add velocity perturbation - Oh My Memo</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?digest=40978830699223671f4072448e654b5958f38b89" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/../_font/fontawesome/css/all.min.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?digest=30d1aed668e5c3a91c3e3bf6a60b675221979f0e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f8f8f8;
+  --color-code-foreground: black;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-half" viewBox="0 0 24 24">
+    <title>Auto light/dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-shadow">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+      <circle cx="12" cy="12" r="9" />
+      <path d="M13 12h5" />
+      <path d="M13 15h4" />
+      <path d="M13 18h1" />
+      <path d="M13 9h4" />
+      <path d="M13 6h1" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc">
+<label class="overlay sidebar-overlay" for="__navigation">
+  <div class="visually-hidden">Hide navigation sidebar</div>
+</label>
+<label class="overlay toc-overlay" for="__toc">
+  <div class="visually-hidden">Hide table of contents sidebar</div>
+</label>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <div class="visually-hidden">Toggle site navigation sidebar</div>
+        <i class="icon"><svg><use href="#svg-menu"></use></svg></i>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Oh My Memo</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle">
+          <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+          <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <div class="visually-hidden">Toggle table of contents sidebar</div>
+        <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  
+  <span class="sidebar-brand-text">Oh My Memo</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder=Search name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../links/index.html">Code links</a><input class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../links/rf.html">Receiver functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../links/gmt.html">GMT</a></li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Seismological tools</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Specfem3D and Full Waveform Inversion</a><input checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mesh.html">Rules of meshes in Specfem3D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rf_fwd.html">Receiver Function Forward simulation with Specfem3D_FWATR</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Add velocity perturbation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="measure_adj.html">measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../matplotlib/index.html">Matplotlib Gallery</a><input class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/chist.html">Colored histogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/align-rf.html">Receiver Functions order by back-azimuth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/evts_stack.html">2D bars for binned events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../prog/index.html">Programing tools</a><input class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><div class="visually-hidden">Toggle child pages in navigation</div><i class="icon"><svg><use href="#svg-arrow-right"></use></svg></i></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../prog/openmpi.html">OpenMPI</a></li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xumijian.me">Home page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/xumi1993/docs-post">GitHub Repository</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle">
+              <div class="visually-hidden">Toggle Light / Dark / Auto color theme</div>
+              <svg class="theme-icon-when-auto"><use href="#svg-sun-half"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <div class="visually-hidden">Toggle table of contents sidebar</div>
+            <i class="icon"><svg><use href="#svg-toc"></use></svg></i>
+          </label>
+        </div>
+        <article role="main">
+          <section id="add-velocity-perturbation">
+<h1>Add velocity perturbation<a class="headerlink" href="#add-velocity-perturbation" title="Permalink to this heading">#</a></h1>
+<section id="add-velocity-perturbation-onto-gll-data-format-file">
+<h2>Add velocity perturbation onto gll data format file<a class="headerlink" href="#add-velocity-perturbation-onto-gll-data-format-file" title="Permalink to this heading">#</a></h2>
+<p>The program of <code class="docutils literal notranslate"><span class="pre">sem_model_addpert.f90</span></code> provide functions to add velocity perturbation to points with Gaussian spatial filtering. The program read all GLL points and then calculate the distance between perturbation points and GLL points to determine amplitudes of the Gaussian filter.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[g(d) = \exp{-\frac{d^2}{2\sigma^2}}\]</div>
+</div>
+<p>Where the <span class="math notranslate nohighlight">\(d\)</span> is this distance. <span class="math notranslate nohighlight">\(\sigma\)</span> is the Gaussian factor in meter.</p>
+<p>The core algorithm is shown as</p>
+<div class="highlight-fortran notranslate"><div class="highlight"><pre><span></span><span class="w"> </span><span class="k">do </span><span class="n">ipt</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">npts</span><span class="w"> </span><span class="c">! Number of perturbation points</span>
+<span class="w">  </span><span class="k">do </span><span class="n">ispec</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">nspec</span><span class="w"></span>
+<span class="w">    </span><span class="k">do </span><span class="n">k</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NGLLZ</span><span class="w"></span>
+<span class="w">      </span><span class="k">do </span><span class="n">j</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NGLLY</span><span class="w"></span>
+<span class="w">        </span><span class="k">do </span><span class="n">i</span><span class="o">=</span><span class="mi">1</span><span class="p">,</span><span class="n">NGLLX</span><span class="w"></span>
+<span class="w">          </span><span class="n">iglob</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">ibool</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">ispec</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="c">! calculate distance</span>
+<span class="w">          </span><span class="n">dist</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">=</span><span class="nb">dsqrt</span><span class="p">((</span><span class="n">x</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">-</span><span class="nb">dble</span><span class="p">(</span><span class="n">xstore</span><span class="p">(</span><span class="n">iglob</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                     </span><span class="o">+</span><span class="p">(</span><span class="n">y</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">-</span><span class="nb">dble</span><span class="p">(</span><span class="n">ystore</span><span class="p">(</span><span class="n">iglob</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span><span class="w"> </span><span class="p">&amp;</span><span class="w"></span>
+<span class="w">                     </span><span class="o">+</span><span class="p">(</span><span class="n">z</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">-</span><span class="nb">dble</span><span class="p">(</span><span class="n">zstore</span><span class="p">(</span><span class="n">iglob</span><span class="p">)))</span><span class="o">**</span><span class="mi">2</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">gaus</span><span class="o">=</span><span class="nb">exp</span><span class="p">(</span><span class="o">-</span><span class="mi">1</span><span class="o">*</span><span class="n">dist</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">*</span><span class="n">dist</span><span class="p">(</span><span class="n">ipt</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="o">/</span><span class="n">sigma</span><span class="o">/</span><span class="n">sigma</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">vstore_new</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">ispec</span><span class="p">)</span><span class="o">=</span><span class="n">vstore</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">ispec</span><span class="p">)</span><span class="o">*</span><span class="p">(</span><span class="mi">1</span><span class="o">+</span><span class="n">pert</span><span class="o">*</span><span class="n">gaus</span><span class="p">)</span><span class="w"></span>
+<span class="w">          </span><span class="n">dlnvs_gaus</span><span class="p">(</span><span class="n">i</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">k</span><span class="p">,</span><span class="n">ispec</span><span class="p">)</span><span class="o">=</span><span class="n">pert</span><span class="o">*</span><span class="n">gaus</span><span class="w"></span>
+<span class="w">        </span><span class="k">enddo</span>
+<span class="k">      enddo</span>
+<span class="k">    enddo</span>
+<span class="k">  enddo</span>
+<span class="k">enddo</span><span class="w"></span>
+</pre></div>
+</div>
+<section id="compilation">
+<h3>Compilation<a class="headerlink" href="#compilation" title="Permalink to this heading">#</a></h3>
+<p>Compile <code class="docutils literal notranslate"><span class="pre">sem_model_addpert.f90</span></code> with <code class="docutils literal notranslate"><span class="pre">mpif90</span></code>.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">mpif90</span> <span class="o">-</span><span class="n">O3</span> <span class="o">-</span><span class="n">traceback</span> <span class="o">-</span><span class="n">o</span> <span class="n">sem_model_addpert</span> <span class="n">sem_model_addpert</span><span class="o">.</span><span class="n">f90</span> <span class="n">exit_mpi</span><span class="o">.</span><span class="n">f90</span> <span class="n">read_basin_topo_bathy_file</span><span class="o">.</span><span class="n">f90</span> <span class="n">utm_geo</span><span class="o">.</span><span class="n">f90</span>
+</pre></div>
+</div>
+</section>
+<section id="run-with-mpirun">
+<h3>Run with <code class="docutils literal notranslate"><span class="pre">mpirun</span></code><a class="headerlink" href="#run-with-mpirun" title="Permalink to this heading">#</a></h3>
+<p>To add a 6% perturbation with</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">model_dir</span><span class="o">=</span>model_2layers
+<span class="nv">topo_dir</span><span class="o">=</span>OUTPUT_FILES/DATABASES_MPI
+cat &gt; gaus01.dat <span class="s">&lt;&lt; eof</span>
+<span class="s">60000.0 0.0 -20000.0</span>
+
+<span class="s">eof</span>
+<span class="nv">dvs</span><span class="o">=</span><span class="m">0</span>.06
+<span class="nv">sigma</span><span class="o">=</span><span class="m">3000</span>
+mpirun -np <span class="m">4</span> <span class="nv">$prog</span> gaus01.dat <span class="nv">$topo_dir</span> <span class="nv">$model_dir</span> vs <span class="nv">$dvs</span> <span class="nv">$sigma</span> 
+</pre></div>
+</div>
+</section>
+</section>
+<section id="virtualization-of-gll-data-format">
+<h2>Virtualization of GLL data format<a class="headerlink" href="#virtualization-of-gll-data-format" title="Permalink to this heading">#</a></h2>
+<section id="convert-binary-file-to-npz">
+<h3>Convert binary file to npz<a class="headerlink" href="#convert-binary-file-to-npz" title="Permalink to this heading">#</a></h3>
+<p>I revise code of <code class="docutils literal notranslate"><span class="pre">auxiliaries/project_and_combine_vol_data_on_regular_grid.f90</span></code> for converting materials form the GLL format to npz format.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="nv">data_filename</span><span class="o">=</span>vs
+<span class="nv">indir</span><span class="o">=</span>model_pert/
+<span class="nv">outdir</span><span class="o">=</span>output_vtk/
+
+cat &gt; fd_proj_grid.txt <span class="s">&lt;&lt;eof</span>
+<span class="s">0.0 -20000.0 -120000</span>
+<span class="s">1000 1000 800</span>
+<span class="s">121  41   151</span>
+<span class="s">eof</span>
+
+mpirun -np <span class="nv">$NPROC</span> ./bin/xproject_and_combine_vol_data_on_regular_grid <span class="nv">$data_filename</span> <span class="nv">$indir</span> <span class="nv">$outdir</span>
+</pre></div>
+</div>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The format of each line in <code class="docutils literal notranslate"><span class="pre">fd_proj_grid.txt</span></code> is</p>
+<ul class="simple">
+<li><p>Starting Coordinates</p></li>
+<li><p>Sampling of points</p></li>
+<li><p>Number of points</p></li>
+</ul>
+</div>
+</section>
+<section id="slice-and-plotting">
+<h3>Slice and plotting<a class="headerlink" href="#slice-and-plotting" title="Permalink to this heading">#</a></h3>
+<p>Now using <code class="docutils literal notranslate"><span class="pre">matplotlib</span></code> to plot cross sections</p>
+<div class="highlight-python notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">numpy</span> <span class="k">as</span> <span class="nn">np</span>
+<span class="kn">import</span> <span class="nn">matplotlib.pyplot</span> <span class="k">as</span> <span class="nn">plt</span>
+
+<span class="k">def</span> <span class="nf">plot</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s1">&#39;vs&#39;</span><span class="p">):</span>
+    <span class="n">data</span> <span class="o">=</span> <span class="n">np</span><span class="o">.</span><span class="n">load</span><span class="p">(</span><span class="s1">&#39;output_vtk/</span><span class="si">{}</span><span class="s1">_projected.npz&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">))</span>
+    <span class="n">center_y</span> <span class="o">=</span> <span class="nb">int</span><span class="p">((</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">]</span><span class="o">.</span><span class="n">size</span><span class="o">-</span><span class="mi">1</span><span class="p">)</span><span class="o">/</span><span class="mi">2</span><span class="p">)</span>
+    <span class="n">sec</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="n">name</span><span class="p">][:,</span> <span class="n">center_y</span><span class="p">,</span> <span class="p">:]</span><span class="o">.</span><span class="n">T</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">pcolormesh</span><span class="p">(</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">],</span> <span class="n">sec</span><span class="p">,</span> <span class="n">cmap</span><span class="o">=</span><span class="s1">&#39;jet_r&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlim</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;x&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylim</span><span class="p">([</span><span class="n">data</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="mi">0</span><span class="p">],</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;z&#39;</span><span class="p">][</span><span class="o">-</span><span class="mi">1</span><span class="p">]])</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">xlabel</span><span class="p">(</span><span class="s1">&#39;X (m)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">ylabel</span><span class="p">(</span><span class="s1">&#39;Z (m)&#39;</span><span class="p">)</span>
+    <span class="n">plt</span><span class="o">.</span><span class="n">savefig</span><span class="p">(</span><span class="s1">&#39;</span><span class="si">{}</span><span class="s1">_sec_y</span><span class="si">{:.2f}</span><span class="s1">.png&#39;</span><span class="o">.</span><span class="n">format</span><span class="p">(</span><span class="n">name</span><span class="p">,</span> <span class="n">data</span><span class="p">[</span><span class="s1">&#39;y&#39;</span><span class="p">][</span><span class="n">center_y</span><span class="p">]),</span> <span class="n">bbox_inches</span><span class="o">=</span><span class="s1">&#39;tight&#39;</span><span class="p">)</span>
+
+<span class="k">if</span> <span class="vm">__name__</span> <span class="o">==</span> <span class="s1">&#39;__main__&#39;</span><span class="p">:</span>
+    <span class="n">plot</span><span class="p">(</span><span class="s1">&#39;vs&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p><img alt="" src="../../_images/vs_sec_y0.00.png" /></p>
+</section>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="measure_adj.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography</div>
+              </div>
+              <svg><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="rf_fwd.html">
+              <svg><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Receiver Function Forward simulation with Specfem3D_FWATR</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Mijian Xu
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            <div class="last-updated">
+              Last updated on 2022 年 06 月 28 日</div>
+          </div>
+          <div class="right-details">
+            <div class="icons">
+              
+            </div>
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            Contents
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Add velocity perturbation</a><ul>
+<li><a class="reference internal" href="#add-velocity-perturbation-onto-gll-data-format-file">Add velocity perturbation onto gll data format file</a><ul>
+<li><a class="reference internal" href="#compilation">Compilation</a></li>
+<li><a class="reference internal" href="#run-with-mpirun">Run with <code class="docutils literal notranslate"><span class="pre">mpirun</span></code></a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#virtualization-of-gll-data-format">Virtualization of GLL data format</a><ul>
+<li><a class="reference internal" href="#convert-binary-file-to-npz">Convert binary file to npz</a></li>
+<li><a class="reference internal" href="#slice-and-plotting">Slice and plotting</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script data-url_root="../../" id="documentation_options" src="../../_static/documentation_options.js"></script>
+    <script src="../../_static/jquery.js"></script>
+    <script src="../../_static/underscore.js"></script>
+    <script src="../../_static/_sphinx_javascript_frameworks_compat.js"></script>
+    <script src="../../_static/doctools.js"></script>
+    <script src="../../_static/scripts/furo.js"></script>
+    <script src="../../_static/clipboard.min.js"></script>
+    <script src="../../_static/copybutton.js"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../../_static/togglebutton.js"></script>
+    <script src="../../_static/design-tabs.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../../_static/../_font/fontawesome/js/all.min.js"></script>
+    <script async="async" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    </body>
+</html>

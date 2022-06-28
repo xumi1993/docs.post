@@ -1,0 +1,16 @@
+
+:orphan:
+
+.. _sphx_glr_seismo_matplotlib_sg_execution_times:
+
+Computation times
+=================
+**00:01.669** total execution time for **seismo_matplotlib** files:
+
++---------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_seismo_matplotlib_align-rf.py` (``align-rf.py``)     | 00:00.894 | 0.0 MB |
++---------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_seismo_matplotlib_evts_stack.py` (``evts_stack.py``) | 00:00.434 | 0.0 MB |
++---------------------------------------------------------------------+-----------+--------+
+| :ref:`sphx_glr_seismo_matplotlib_chist.py` (``chist.py``)           | 00:00.341 | 0.0 MB |
++---------------------------------------------------------------------+-----------+--------+
