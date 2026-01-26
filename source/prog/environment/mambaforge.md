@@ -28,7 +28,7 @@ Mambaforge is a distribution of the conda package manager that uses the fast mam
 2. Choose the installer for your operating system:
    - **Windows**: Download `Mambaforge-Windows-x86_64.exe`
    - **macOS**: Download `Mambaforge-MacOSX-x86_64.sh` (Intel) or `Mambaforge-MacOSX-arm64.sh` (Apple Silicon)
-   - **Linux**: Download `Mambaforge-Linux-x86_64.sh`
+   - **Linux (WSL)**: Download `Mambaforge-Linux-x86_64.sh`
 
 ### Install on Windows
 
@@ -38,12 +38,16 @@ Mambaforge is a distribution of the conda package manager that uses the fast mam
 4. Check "Add Mambaforge to PATH" (optional, but recommended for beginners)
 5. Complete installation
 
-### Install on macOS/Linux
+:::{note}
+I recommend using Windows Subsystem for Linux (WSL) for a more Unix-like experience when working with Mambaforge on Windows. Please see the [WSL setup guide](wsl.md) for more details.
+:::
+
+### Install on macOS/Linux (including WSL)
 
 1. Open Terminal
 2. Navigate to download directory:
    ```bash
-   cd Downloads
+   cd path/to/downloads
    ```
 
 3. Run the installer script:
@@ -59,7 +63,7 @@ Mambaforge is a distribution of the conda package manager that uses the fast mam
 
 5. Restart your terminal or run:
    ```bash
-   source ~/.bashrc  # or ~/.zshrc
+   exec $SHELL
    ```
 
 ### Verify Installation
