@@ -1,6 +1,6 @@
 # Setting Up Your Development Environment
 
-This chapter will help complete beginners set up a programming development environment from scratch. We will introduce commonly used development tools and environments, including Visual Studio Code (VSCode), Linux operating system, and Windows Subsystem for Linux (WSL).
+This chapter will help complete beginners set up a programming development environment from scratch. We will introduce commonly used development tools and environments.
 
 ## Why Do You Need a Development Environment?
 

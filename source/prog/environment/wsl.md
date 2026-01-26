@@ -112,7 +112,7 @@ After installation, verify WSL is working:
 
 1. Open PowerShell or Command Prompt
 2. Run:
-   ```cmd
+   ```batch
    wsl --list --verbose
    ```
    You should see your distribution listed with STATE: Running and VERSION: 2

@@ -39,7 +39,7 @@ extensions = ['sphinx.ext.githubpages',
               "sphinx.ext.todo",
               "sphinx.ext.viewcode",
               "sphinxcontrib.icon",
-              "sphinx_gallery.gen_gallery",
+              # "sphinx_gallery.gen_gallery",
               'sphinxcontrib.bibtex',
 ]
 
@@ -66,29 +66,29 @@ myst_enable_extensions = [
     "deflist",
 ]
 
-sphinx_gallery_conf = {
-    # path to your examples scripts
-    "examples_dirs": [
-        "./examples/matplotlib",
-    ],
-    # path where to save gallery generated examples
-    "gallery_dirs": ['seismo/matplotlib'],
-    # Patter to search for example files
-    "filename_pattern": r"\.py",
-    # Remove the "Download all examples" button from the top level gallery
-    "download_all_examples": False,
-    # Sort gallery example by file name instead of number of lines (default)
-    # "within_subsection_order": ExampleTitleSortKey,
-    # directory where function granular galleries are stored
-    "backreferences_dir": "api/generated/backreferences",
-    # Modules for which function level galleries are created.  In
-    # this case sphinx_gallery and numpy in a tuple of strings.
-    "doc_module": "seispy",
-    # Insert links to documentation of objects in the examples
-    "reference_url": {"pygmt": None},
-    # Removes configuration comments from scripts
-    "remove_config_comments": True,
-}
+# sphinx_gallery_conf = {
+#     # path to your examples scripts
+#     "examples_dirs": [
+#         "./examples/matplotlib",
+#     ],
+#     # path where to save gallery generated examples
+#     "gallery_dirs": ['seismo/matplotlib'],
+#     # Patter to search for example files
+#     "filename_pattern": r"\.py",
+#     # Remove the "Download all examples" button from the top level gallery
+#     "download_all_examples": False,
+#     # Sort gallery example by file name instead of number of lines (default)
+#     # "within_subsection_order": ExampleTitleSortKey,
+#     # directory where function granular galleries are stored
+#     "backreferences_dir": "api/generated/backreferences",
+#     # Modules for which function level galleries are created.  In
+#     # this case sphinx_gallery and numpy in a tuple of strings.
+#     "doc_module": "seispy",
+#     # Insert links to documentation of objects in the examples
+#     "reference_url": {"pygmt": None},
+#     # Removes configuration comments from scripts
+#     "remove_config_comments": True,
+# }
 
 # -- Options for HTML output -------------------------------------------------
 
