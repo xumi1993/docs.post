@@ -116,9 +116,9 @@ copybutton_remove_prompts = True
 nb_execution_mode = "cache"
 
 html_extra_path = []
-html_last_updated_fmt = "%Y 年 %m 月 %d 日"
+html_last_updated_fmt = "%d/%m/%Y"
 html_title = project
-html_css_files = ["custom.css"]
+html_css_files = ["custom.css", "gallery.css"]
 
 # html_logo = os.path.abspath(os.path.join('.', '_static', 'logo.ico'))
 

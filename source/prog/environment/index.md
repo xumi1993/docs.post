@@ -20,12 +20,15 @@ For programming, especially in scientific computing, a Unix-like environment (Li
 
 One of the biggest challenges for beginners is transitioning from the familiar graphical user interface (GUI) to the command line. While GUIs are intuitive and visual, the command line offers unparalleled efficiency and control. Learning to use the terminal might feel daunting at first, but it's essential for programming because many tasks, such as running scripts, managing files, or automating workflows, are faster and more powerful via commands. Moreover, the command line is crucial for remote work: you'll often need to connect to servers using SSH (Secure Shell), which allows secure access to remote machines (or High Performance Computing clusters) for running computations, managing data, or deploying applications. Mastering these tools will significantly enhance your productivity and open up advanced possibilities in scientific computing.
 
+## Development Environment Components
 ```{toctree}
 :maxdepth: 1
 
 vscode
 wsl
+linux-basics
 mambaforge
+vim-intro
 ```
 
 ## Summary
