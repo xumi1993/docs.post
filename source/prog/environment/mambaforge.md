@@ -1,17 +1,17 @@
-# Python Environment: Mambaforge
+# Python Environment: Miniforge
 
-Mambaforge is a powerful package management system that provides fast and reliable installation of scientific packages and their dependencies.
+Miniforge is a powerful package management system that provides fast and reliable installation of scientific packages and their dependencies.
 
-## What is Mambaforge?
+## What is Miniforge?
 
-Mambaforge is a distribution of the conda package manager that uses the fast mamba solver instead of the traditional conda solver. It includes:
+Miniforge is a distribution of the conda package manager that uses the fast mamba solver instead of the traditional conda solver. It includes:
 
 - **Mamba**: A fast, cross-platform package manager
 - **Conda**: The classic conda package manager
 - **Python**: A Python interpreter
 - **Essential packages**: numpy, pandas, scipy, etc.
 
-## Why Choose Mambaforge?
+## Why Choose Miniforge?
 
 - **Speed**: Mamba is significantly faster than conda (often 10-100x faster)
 - **Reliability**: Better dependency resolution
@@ -21,25 +21,25 @@ Mambaforge is a distribution of the conda package manager that uses the fast mam
 
 ## Installation
 
-### Download Mambaforge
+### Download Miniforge
 
-1. Visit the official download page: [https://github.com/conda-forge/miniforge#mambaforge](https://github.com/conda-forge/miniforge#mambaforge)
+1. Visit the official download page: [https://github.com/conda-forge/miniforge](https://github.com/conda-forge/miniforge/releases)
 
 2. Choose the installer for your operating system:
-   - **Windows**: Download `Mambaforge-Windows-x86_64.exe`
-   - **macOS**: Download `Mambaforge-MacOSX-x86_64.sh` (Intel) or `Mambaforge-MacOSX-arm64.sh` (Apple Silicon)
-   - **Linux (WSL)**: Download `Mambaforge-Linux-x86_64.sh`
+   - **Windows**: Download `Miniforge-Windows-x86_64.exe`
+   - **macOS**: Download `Miniforge-MacOSX-x86_64.sh` (Intel) or `Miniforge-MacOSX-arm64.sh` (Apple Silicon)
+   - **Linux (WSL)**: Download `Miniforge-Linux-x86_64.sh`
 
 ### Install on Windows
 
 1. Run the downloaded `.exe` file
 2. Follow the installation wizard
-3. Choose installation location (recommended: `C:\Users\<username>\mambaforge`)
-4. Check "Add Mambaforge to PATH" (optional, but recommended for beginners)
+3. Choose installation location (recommended: `C:\Users\<username>\miniforge3`)
+4. Check "Add Miniforge to PATH" (optional, but recommended for beginners)
 5. Complete installation
 
 :::{note}
-I recommend using Windows Subsystem for Linux (WSL) for a more Unix-like experience when working with Mambaforge on Windows. Please see the [WSL setup guide](wsl.md) for more details.
+I recommend using Windows Subsystem for Linux (WSL) for a more Unix-like experience when working with Miniforge on Windows. Please see the [WSL setup guide](wsl.md) for more details.
 :::
 
 ### Install on macOS/Linux (including WSL)
@@ -52,14 +52,14 @@ I recommend using Windows Subsystem for Linux (WSL) for a more Unix-like experie
 
 3. Run the installer script:
    ```bash
-   sh Mambaforge-*.sh
+   sh Miniforge-*.sh
    ```
 
 4. Follow the prompts:
    - Press Enter to read the license
    - Type `yes` to accept
    - Choose installation location (default is recommended)
-   - Type `yes` to initialize Mambaforge
+   - Type `yes` to initialize Miniforge
 
 5. Restart your terminal or run:
    ```bash
@@ -81,7 +81,7 @@ You should see version numbers for both mamba and conda.
 
 ### Understanding Environment Isolation
 
-One of Mambaforge's most powerful features is **environment isolation**. This is crucial for beginners to understand and use properly.
+One of Miniforge's most powerful features is **environment isolation**. This is crucial for beginners to understand and use properly.
 
 #### Why Do You Need Environment Isolation?
 
@@ -187,7 +187,7 @@ dependencies:
   - scikit-learn
 ```
 
-### Update Mambaforge
+### Update Miniforge
 
 Keep your installation updated:
 

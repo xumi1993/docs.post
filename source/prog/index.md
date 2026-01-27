@@ -1,9 +1,10 @@
 # Learning Program
 
+## Environment Setup
 
 ```{toctree}
-:maxdepth: 1
+:titlesonly:
 
 environment/index
-openmpi
 ```
+
