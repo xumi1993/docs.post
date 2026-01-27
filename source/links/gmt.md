@@ -42,9 +42,7 @@
 - [Built-in example gallery](https://docs.generic-mapping-tools.org/latest/gallery.html)
 - [Built-in Animations](https://docs.generic-mapping-tools.org/latest/animations.html)
 - [PyGMT gallery](https://www.pygmt.org/dev/gallery/index.html)
-- [GMT中文手册：绘图实例](https://docs.gmt-china.org/latest/examples/)
-- [GMT 教學手冊：章節地圖索引](https://gmt-tutorials.org/gallery.html)
-- [GMT中文社区图库](https://gmt-china.org/gallery/) (no longer maintained)
+- [GMT中文手册：绘图实例](https://docs.gmt-china.org/latest/gallery/)
 
 
 ## Geographic Dataset
