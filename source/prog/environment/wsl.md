@@ -185,10 +185,6 @@ Check for distribution updates:
 sudo apt update && sudo apt upgrade
 ```
 
-```bash
-sudo apt update && sudo apt upgrade
-```
-
 ## Configuring WSL
 
 After installation:
