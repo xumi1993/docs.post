@@ -26,17 +26,15 @@ The Shell (e.g., Bash) is your primary interface for coding:
 - Automate workflows with scripts.
 - Connect to remote servers (e.g., HPC clusters) via SSH.
 
-Key: Everything in scientific computing—data processing, model training—can be scripted and run from the command line.
-
-**Example: Simple Shell Script for Data Processing**
+**Example: Simple Shell Script to Count Files**
 ```bash
 #!/bin/bash
-# Process CSV data: filter valid rows and compute average
-echo "Processing data.csv..."
-grep "^[0-9]" data.csv | awk -F',' '{sum+=$2; count++} END {print "Average:", sum/count}' > results.txt
-echo "Results saved to results.txt"
+# Count the number of files in the current directory
+echo "Counting files in current directory..."
+file_count=$(ls -1 | wc -l)
+echo "There are $file_count files."
 ```
-Run it with: `sh ./process.sh`
+Run it with: `sh ./count_files.sh`
 
 ## File Management for Coders
 

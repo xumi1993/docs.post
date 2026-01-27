@@ -123,7 +123,7 @@ After installation, verify WSL is working:
    uname -a  # Should show Linux kernel info
    ```
 
-### Troubleshooting Common Issues
+<!-- ### Troubleshooting Common Issues
 
 Here are solutions to common WSL installation and setup problems:
 
@@ -157,9 +157,9 @@ Here are solutions to common WSL installation and setup problems:
 - Check Windows network settings and ensure they're working
 - If using a VPN, try disabling it temporarily
 
-#### WSL Not Starting or Crashing
+#### WSL Not Starting or Crashing -->
 
-**Solutions:**
+<!-- **Solutions:**
 - Update WSL: `wsl --update`
 - Reset WSL: `wsl --shutdown` followed by `wsl`
 - Reinstall the Linux distribution: `wsl --unregister <DistributionName>` then reinstall from Microsoft Store
@@ -169,7 +169,7 @@ Here are solutions to common WSL installation and setup problems:
 **Solutions:**
 - Ensure you're running commands with appropriate permissions (`sudo` for admin tasks)
 - Check file permissions: `ls -la <filename>`
-- If accessing Windows files from WSL, ensure the Windows drive is mounted correctly
+- If accessing Windows files from WSL, ensure the Windows drive is mounted correctly -->
 
 ### Updating WSL
 
