@@ -4,3 +4,6 @@ build/
 auto_examples/
 api/
 source/seismo/matplotlib/
+
+__pycache__/
+source/prog/python/*.py

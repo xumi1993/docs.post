@@ -34,12 +34,12 @@ extensions = ['sphinx.ext.githubpages',
               "sphinx_cjkspace.cjkspace",
               "sphinx_copybutton",
               "sphinx_design",
-              "myst_parser",
+              "myst_nb",
               "sphinx.ext.mathjax",
               "sphinx.ext.todo",
               "sphinx.ext.viewcode",
               "sphinxcontrib.icon",
-              # "sphinx_gallery.gen_gallery",
+              "sphinx_gallery.gen_gallery",
               'sphinxcontrib.bibtex',
 ]
 
@@ -59,36 +59,29 @@ language = 'en'
 # List of patterns, relative to source directory, that match files and
 # directories to ignore when looking for source files.
 # This pattern also affects html_static_path and html_extra_path.
-exclude_patterns = []
+exclude_patterns = [
+    "seismo/matplotlib/align-rf.ipynb",
+    "seismo/matplotlib/chist.ipynb",
+    "seismo/matplotlib/evts_stack.ipynb",
+]
 
 myst_enable_extensions = [
     "colon_fence",
     "deflist",
 ]
 
-# sphinx_gallery_conf = {
-#     # path to your examples scripts
-#     "examples_dirs": [
-#         "./examples/matplotlib",
-#     ],
-#     # path where to save gallery generated examples
-#     "gallery_dirs": ['seismo/matplotlib'],
-#     # Patter to search for example files
-#     "filename_pattern": r"\.py",
-#     # Remove the "Download all examples" button from the top level gallery
-#     "download_all_examples": False,
-#     # Sort gallery example by file name instead of number of lines (default)
-#     # "within_subsection_order": ExampleTitleSortKey,
-#     # directory where function granular galleries are stored
-#     "backreferences_dir": "api/generated/backreferences",
-#     # Modules for which function level galleries are created.  In
-#     # this case sphinx_gallery and numpy in a tuple of strings.
-#     "doc_module": "seispy",
-#     # Insert links to documentation of objects in the examples
-#     "reference_url": {"pygmt": None},
-#     # Removes configuration comments from scripts
-#     "remove_config_comments": True,
-# }
+sphinx_gallery_conf = {
+    "examples_dirs": [
+        "./examples/matplotlib",
+    ],
+    "gallery_dirs": ['seismo/matplotlib'],
+    "filename_pattern": r"\.py",
+    "download_all_examples": False,
+    "backreferences_dir": "api/generated/backreferences",
+    "doc_module": "seispy",
+    "reference_url": {"pygmt": None},
+    "remove_config_comments": True,
+}
 
 # -- Options for HTML output -------------------------------------------------
 
@@ -113,7 +106,12 @@ copybutton_only_copy_prompt_lines = True
 copybutton_remove_prompts = True
 
 # options for myst-nb
-nb_execution_mode = "cache"
+nb_execution_mode = "auto"
+nb_execution_timeout = 120
+nb_execution_raise_on_error = True
+nb_execution_excludepatterns = [
+    "seismo/**",
+]
 
 html_extra_path = []
 html_last_updated_fmt = "%d/%m/%Y"
