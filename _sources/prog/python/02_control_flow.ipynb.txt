@@ -1,0 +1,207 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "id": "d4829075",
+            "metadata": {},
+            "source": [
+                "# Python Basics - 02. Control Flow\n",
+                "\n",
+                "This notebook covers conditional statements and loops. These control flow structures allow your program to make decisions and repeat tasks, which are fundamental to developing complex logic."
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "9afc828e",
+            "metadata": {
+                "language": "markdown"
+            },
+            "source": [
+                "## Download Notebook\n",
+                "\n",
+                "{download}`Download this notebook <02_control_flow.ipynb>`\n"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "e83efb0d",
+            "metadata": {},
+            "source": [
+                "## 1. Conditional Statements (If, Elif, Else)\n",
+                "\n",
+                "An `if` statement executes a block of code only if its condition is true. The `elif` (short for 'else if') can be used to check multiple conditions, and `else` catches anything that didn't match the preceding conditions.\n",
+                "\n",
+                "**Note:** Python uses indentation (typically 4 spaces) to define code blocks, unlike curly braces `{}` in C++ or Java."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "54f1437d",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "score = 85\n",
+                "print(f\"Your score is {score}.\")\n",
+                "\n",
+                "if score >= 90:\n",
+                "    print(\"Grade: Excellent (A)\")\n",
+                "elif score >= 80:\n",
+                "    print(\"Grade: Good (B)\")\n",
+                "elif score >= 60:\n",
+                "    print(\"Grade: Pass (C)\")\n",
+                "else:\n",
+                "    print(\"Grade: Fail (F)\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "63188ad8",
+            "metadata": {},
+            "source": [
+                "## 2. For Loops\n",
+                "\n",
+                "The `for` loop in Python is used to iterate over a sequence (such as a list, string, or a range object)."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "47ae6766",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# Iterating over a sequence of numbers using range()\n",
+                "print(\"Counting from 0 to 4:\")\n",
+                "for i in range(5):\n",
+                "    print(i, end=\" \")  # Use end=\" \" to print on the same line\n",
+                "print(\"\\n\")\n",
+                "\n",
+                "# Iterating over elements in a list\n",
+                "fruits = [\"apple\", \"banana\", \"cherry\"]\n",
+                "print(\"Items in the fruit list:\")\n",
+                "for fruit in fruits:\n",
+                "    print(f\"- {fruit}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "d68fcce6",
+            "metadata": {},
+            "source": [
+                "## 3. While Loops\n",
+                "\n",
+                "A `while` loop continues to execute as long as its condition remains true. It's important to update the variables within the loop so it eventually terminates, avoiding an infinite loop."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "eee11843",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "count = 1\n",
+                "print(\"Starting a while loop...\")\n",
+                "while count <= 3:\n",
+                "    print(f\"Count is currently {count}\")\n",
+                "    count += 1  # Equivalent to: count = count + 1\n",
+                "print(\"Done!\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "2307d7b4",
+            "metadata": {},
+            "source": [
+                "## 4. Break and Continue\n",
+                "\n",
+                "- `break`: Immediately exits the nearest enclosing loop.\n",
+                "- `continue`: Skips the rest of the code inside the loop for the current iteration, and moves to the next iteration."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "b9835ee0",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "print(\"\\n--- Break Example ---\")\n",
+                "for i in range(1, 10):\n",
+                "    if i == 5:\n",
+                "        print(\"Breaking out at i = 5\")\n",
+                "        break\n",
+                "    print(i, end=\" \")\n",
+                "\n",
+                "print(\"\\n\\n--- Continue Example ---\")\n",
+                "for i in range(1, 6):\n",
+                "    if i == 3:\n",
+                "        print(\"\\nSkipping i = 3\")\n",
+                "        continue\n",
+                "    print(i, end=\" \")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "00076fcf",
+            "metadata": {},
+            "source": [
+                "## 5. Structural Pattern Matching and Loop `else`\n",
+                "\n",
+                "### `match` / `case` (Python 3.10+)\n",
+                "Pattern matching lets you branch cleanly based on shape and value.\n",
+                "\n",
+                "### Loop `else`\n",
+                "A loop `else` block runs only when the loop ends normally (not via `break`).\n",
+                "This is useful for search logic where you want to report \"not found\" cleanly."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "5d1a99d8",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# match/case example (Python 3.10+)\n",
+                "# Pattern matching is often cleaner than long if/elif chains.\n",
+                "def http_status_message(status_code):\n",
+                "    match status_code:\n",
+                "        case 200:\n",
+                "            return \"OK\"\n",
+                "        case 401 | 403:\n",
+                "            # Multiple literals can be grouped with |.\n",
+                "            return \"Unauthorized or Forbidden\"\n",
+                "        case 404:\n",
+                "            return \"Not Found\"\n",
+                "        case _:\n",
+                "            # _ is the wildcard (default branch).\n",
+                "            return \"Unknown Status\"\n",
+                "\n",
+                "print(http_status_message(200))\n",
+                "print(http_status_message(403))\n",
+                "print(http_status_message(418))\n",
+                "\n",
+                "# loop-else example\n",
+                "# else runs only if the loop finishes WITHOUT hitting break.\n",
+                "target = 17\n",
+                "numbers = [2, 5, 9, 17, 23]\n",
+                "\n",
+                "for n in numbers:\n",
+                "    if n == target:\n",
+                "        print(f\"Found target: {target}\")\n",
+                "        break\n",
+                "else:\n",
+                "    print(\"Target not found\")"
+            ]
+        }
+    ],
+    "metadata": {
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 5
+}

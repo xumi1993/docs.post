@@ -1,0 +1,1127 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="How to determine an optimal step length" href="line_search.html"><link rel="prev" title="Add velocity perturbation" href="addpert.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography - Oh My Memo</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="/home/runner/micromamba/envs/docs/lib/python3.12/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/css/all.min.css?v=53359634" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css?v=781a0e83" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Oh My Memo</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <span class="sidebar-brand-text">Oh My Memo</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../links/index.html">Code links</a><input aria-label="Toggle navigation of Code links" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../links/rf.html">Receiver functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../links/gmt.html">GMT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../links/model.html">Earth models</a><input aria-label="Toggle navigation of Earth models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../links/ak135.html">AK135</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../links/iasp91.html">IASP91</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../links/prem.html">PREM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Seismological tools</a><input aria-label="Toggle navigation of Seismological tools" checked="" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Specfem3D and Full Waveform Inversion</a><input aria-label="Toggle navigation of Specfem3D and Full Waveform Inversion" checked="" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="mesh.html">Rules of meshes in Specfem3D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="rf_fwd.html">Receiver Function Forward simulation with Specfem3D_FWATR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="addpert.html">Add velocity perturbation</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography</a></li>
+<li class="toctree-l3"><a class="reference internal" href="line_search.html">How to determine an optimal step length</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../matplotlib/index.html">Matplotlib Gallery</a><input aria-label="Toggle navigation of Matplotlib Gallery" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/chist.html">Colored histogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/align-rf.html">Receiver Functions order by back-azimuth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../matplotlib/evts_stack.html">2D bars for binned events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../prog/index.html">Learning Program</a><input aria-label="Toggle navigation of Learning Program" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../prog/environment/index.html">Setting Up Your Development Environment</a><input aria-label="Toggle navigation of Setting Up Your Development Environment" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/environment/vscode.html">Visual Studio Code (VSCode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/environment/wsl.html">Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/environment/linux-basics.html">Linux Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/environment/mambaforge.html">Python Environment: Miniforge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/environment/vim-intro.html">Vim Introduction Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../prog/python/index.html">Python Syntax Tutorial</a><input aria-label="Toggle navigation of Python Syntax Tutorial" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/01_introduction.html">Python Basics - 01. Introduction &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/02_control_flow.html">Python Basics - 02. Control Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/03_data_structures.html">Python Basics - 03. Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/04_functions.html">Python Basics - 04. Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/05_modules_and_packages.html">Python Basics - 05. Modules and Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/06_file_io.html">Python Basics - 06. File Input / Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/07_errors_and_exceptions.html">Python Basics - 07. Errors and Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/08_classes_and_objects.html">Python Basics - 08. Object-Oriented Programming (OOP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/09_comprehensions_and_generators.html">Python Basics - 09. Comprehensions, Iterators, and Generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/10_strings_unpacking_and_slicing.html">Python Basics - 10. Strings, Slicing, and Unpacking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/11_scope_closures_and_decorators.html">Python Basics - 11. Scope, Closures, and Decorators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../prog/python/12_advanced_oop.html">Python Basics - 12. Advanced OOP Essentials</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xumijian.me">Home page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/xumi1993/docs-post">GitHub Repository</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/seismo/specfem3d/measure_adj.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="measure-adj-a-software-package-for-making-measurements-and-computing-adjoint-sources-for-seismic-tomography">
+<h1>measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography<a class="headerlink" href="#measure-adj-a-software-package-for-making-measurements-and-computing-adjoint-sources-for-seismic-tomography" title="Link to this heading">¶</a></h1>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a remake version of <a class="reference external" href="https://github.com/geodynamics/specfem3d/tree/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj">measure_adj</a> manual, which credited by Carl Tape, Qinya Liu</p>
+</div>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This is a preliminary user manual with many modifications to come.</p>
+</div>
+<p>The open-source software package measure_adj is designed for making measurements for seismic tomography. Several misfit functions are available, such as a simple waveform difference, a simple cross-correlation traveltime difference, or a frequency dependent multitaper traveltime difference. For each misfit function, the code also provides adjoint sources, which are needed for tomographic inversions using adjoint methods <span id="id1">[<a class="reference internal" href="#id11" title="J. Tromp, C. H. Tape, and Q. Liu. Seismic tomography, adjoint methods, time reversal and banana-doughnut kernels. Geophys. J. Int., 160:195–216, 2005. URL: http://scholar.google.com/scholar?hl=en\&amp;btnG=Search\&amp;q=intitle:Seismic+tomography,+adjoint+methods,+time+reversal+and+banana-doughnut+kernels\#0.">Tromp <em>et al.</em>, 2005</a>, <a class="reference internal" href="#id15" title="Q. Liu and J. Tromp. Finite-frequency kernels based on adjoint methods. Bull. Seism. Soc. Am., 96(6):2283–2397, 2006. URL: http://www.bssaonline.org/cgi/content/abstract/94/1/187.">Liu and Tromp, 2006</a>, <a class="reference internal" href="#id10" title="C. H. Tape, Q. Liu, and J. Tromp. Finite-frequency tomography using adjoint methods - Methodology and examples using membrane surface waves. Geophys. J. Int., 168:1105–29, 2007.">Tape <em>et al.</em>, 2007</a>]</span>. This code was used to make measurements and adjoint sources for the (large-scale) tomographic inversion of <span id="id2">Tape <em>et al.</em> [<a class="reference internal" href="#id14" title="C. H. Tape, Q. Liu, Alessia Maggi, and J. Tromp. Adjoint tomography of the southern California crust. Science, 325(5943):988–992, August 2009. URL: http://www.ncbi.nlm.nih.gov/pubmed/19696349, doi:10.1126/science.1175298.">2009</a>]</span> for the southern California crust.</p>
+<p>MEAS–ADJ is designed to complement FLEXWIN <span id="id3">[<a class="reference internal" href="#id13" title="A. Maggi, C. H. Tape, M. Chen, D. Chao, and J. Tromp. An automated time-window selection algorithm for seismic tomography. Geophys. J. Int., 178:257–281, July 2009. URL: http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04099.x, doi:10.1111/j.1365-246X.2009.04099.x.">Maggi <em>et al.</em>, 2009</a>]</span>, which is designed to pick time windows for measurement.  In particular, FLEXWIN has the option of providing a <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.WINDOWS</span></code> file that can be directly read into <strong>measure_adj</strong>.  However, FLEXWIN is not necessary to run <strong>measure_adj</strong>.</p>
+<p>There are two additional sets of notes on multitaper measurements and adjoint sources, <a class="reference external" href="https://github.com/geodynamics/specfem3d/blob/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj/USER_MANUAL/multitaper_notes.pdf">multitaper_notes.pdf</a> and <a class="reference external" href="https://github.com/geodynamics/specfem3d/blob/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj/USER_MANUAL/multitaper_vala.pdf">multitaper_vala.pdf</a>. Some sections of <a class="reference external" href="https://github.com/geodynamics/specfem3d/blob/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj/USER_MANUAL/multitaper_vala.pdf">multitaper_notes.pdf</a> were published as “Multitaper measurements for adjoint tomography” in Appendix C <span id="id4">[<a class="reference internal" href="#id9" title="C. H. Tape. Seismic Tomography of Southern California Using Adjoint Methods. PhD thesis, Caltech, 2009. URL: http://thesis.library.caltech.edu/1656/.">Tape, 2009</a>]</span>.</p>
+<p>Please email Carl Tape: carltape&#64;fas.harvard.edu with suggestions or corrections.</p>
+</section>
+<section id="getting-started">
+<h2>Getting started<a class="headerlink" href="#getting-started" title="Link to this heading">¶</a></h2>
+<section id="system-requirements">
+<h3>System requirements<a class="headerlink" href="#system-requirements" title="Link to this heading">¶</a></h3>
+<p>In order to install and run, <strong>measure_adj</strong> program requires:</p>
+<ul class="simple">
+<li><p>UNIX operating system (Linux, Solaris, MacOS …)</p></li>
+<li><p>GNU make</p></li>
+<li><p>a fortran compiler (gfortran, ifort, etc…)</p></li>
+<li><p>other packages : SAC (Seismic Analysis Code, available from IRIS); GMT (Generic Mapping Tools) for the plotting scripts</p></li>
+</ul>
+<p>MEAS–ADJ requires the following libraries external to the package in order to compile and run: <code class="docutils literal notranslate"><span class="pre">libsacio.a</span></code> and <code class="docutils literal notranslate"><span class="pre">libsac.a</span></code>. Both libraries are distributed by IRIS as part of the SAC package (version 101.2 and above). The IRIS download site (as of 21-Oct-2009) is <a class="reference external" href="http://www.iris.edu/software/sac/sac.request.htm">here</a>. (To check your version, type sac.)</p>
+</section>
+</section>
+<section id="obtaining-the-code">
+<h2>Obtaining the code<a class="headerlink" href="#obtaining-the-code" title="Link to this heading">¶</a></h2>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The code is available as a gzipped tarball from CIG (Computational Infrastructure for Geodynamics, \url{http://www.geodynamics.org}). The tarball is unpacked by typing <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">xvzf</span> <span class="pre">flexwin.tgz</span></code>.</p>
+</div>
+<p>(Use SVN for now.)</p>
+<p>The package contains the MEAS–ADJ code and documentation, as well as a set of test data, examples of user files for different scenarios, and a set of utility scripts that may be useful for running <strong>measure_adj</strong> on large datasets.</p>
+</section>
+<section id="compilation">
+<h2>Compilation<a class="headerlink" href="#compilation" title="Link to this heading">¶</a></h2>
+<p>If your compiler of choice is gfortran, then you should be able to use the <code class="docutils literal notranslate"><span class="pre">Makefile</span></code> with only minor modifications (notably you may need to change the search path for the <code class="docutils literal notranslate"><span class="pre">libsacio.a</span></code> library).  If you prefer another compiler, you should modify the OPT and FC lines in the makefiles accordingly. We tested the code using gfortran version 4.3.3. (To check your version, type <code class="docutils literal notranslate"><span class="pre">gfortran</span> <span class="pre">--version</span></code>.)</p>
+<p>Steps to compile the MEAS–ADJ package:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make</span> <span class="n">clean</span>
+<span class="n">make</span>
+</pre></div>
+</div>
+<p>You should end up with the <strong>measure_adj</strong> executable.</p>
+<section id="running-the-test-case">
+<h3>Running the test case<a class="headerlink" href="#running-the-test-case" title="Link to this heading">¶</a></h3>
+<p>After compiling, execute the following two commands:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">measure_adj</span>
+<span class="n">csh</span> <span class="o">-</span><span class="n">f</span> <span class="n">run_mt_measure_adj</span><span class="o">.</span><span class="n">csh</span>
+</pre></div>
+</div>
+<p>If all goes well, you should generate the figure</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PLOTS</span><span class="o">/</span><span class="mi">9818433</span><span class="n">_T006_T030_MPM_CI_m16_mtm_win_adj</span><span class="o">.</span><span class="n">pdf</span>
+</pre></div>
+</div>
+<p>A set of auxillary programs/files are required for the successful run of
+post-processing and plotting scripts, including</p>
+<ul>
+<li><p>Southern California faults xy files in <code class="docutils literal notranslate"><span class="pre">PLOTS/plot_win_adj.pl</span></code>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$dir0 = &quot;/opt/seismo/datalib/SC/&quot;;
+$fault_file = &quot;$dir0/jennings.xy&quot;;
+</pre></div>
+</div>
+</li>
+<li><p>Dr. Lupei Zhu’s <code class="docutils literal notranslate"><span class="pre">saclst</span></code> program</p></li>
+<li><p>Dr. Lupei Zhu’s <code class="docutils literal notranslate"><span class="pre">pssac2</span></code> plotting program (<code class="docutils literal notranslate"><span class="pre">pssac</span></code> may work as well).</p></li>
+</ul>
+</section>
+</section>
+<section id="running-meas-adj">
+<h2>Running MEAS–ADJ<a class="headerlink" href="#running-meas-adj" title="Link to this heading">¶</a></h2>
+<p>Two input files are read in when <code class="docutils literal notranslate"><span class="pre">mt_measure_adj</span></code> is executed.</p>
+<section id="input-file-1-measurement-windows">
+<h3>Input file 1: <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.WINDOWS</span></code><a class="headerlink" href="#input-file-1-measurement-windows" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="mi">3</span>
+<span class="n">DATA</span><span class="o">/</span><span class="mf">9818433.</span><span class="n">CI</span><span class="o">.</span><span class="n">MPM</span><span class="o">.</span><span class="n">BHR</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">T006_T030</span>
+<span class="n">SYN</span><span class="o">/</span><span class="n">MPM</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">BHR</span><span class="o">.</span><span class="n">semd</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">m16</span><span class="o">.</span><span class="n">T006_T030</span>
+           <span class="mi">3</span>
+   <span class="mf">11.2770</span>    <span class="mf">58.4770</span>
+   <span class="mf">58.4770</span>    <span class="mf">81.3770</span>
+   <span class="mf">81.3770</span>   <span class="mf">101.6770</span>
+<span class="n">DATA</span><span class="o">/</span><span class="mf">9818433.</span><span class="n">CI</span><span class="o">.</span><span class="n">MPM</span><span class="o">.</span><span class="n">BHT</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">T006_T030</span>
+<span class="n">SYN</span><span class="o">/</span><span class="n">MPM</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">BHT</span><span class="o">.</span><span class="n">semd</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">m16</span><span class="o">.</span><span class="n">T006_T030</span>
+           <span class="mi">1</span>
+   <span class="mf">49.3270</span>    <span class="mf">95.3270</span>
+<span class="n">DATA</span><span class="o">/</span><span class="mf">9818433.</span><span class="n">CI</span><span class="o">.</span><span class="n">MPM</span><span class="o">.</span><span class="n">BHZ</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">d</span><span class="o">.</span><span class="n">T006_T030</span>
+<span class="n">SYN</span><span class="o">/</span><span class="n">MPM</span><span class="o">.</span><span class="n">CI</span><span class="o">.</span><span class="n">BHZ</span><span class="o">.</span><span class="n">semd</span><span class="o">.</span><span class="n">sac</span><span class="o">.</span><span class="n">m16</span><span class="o">.</span><span class="n">T006_T030</span>
+           <span class="mi">1</span>
+   <span class="mf">60.9770</span>    <span class="mf">99.3770</span>
+</pre></div>
+</div>
+<p>The first line contains the number of pairs of records to be read in.  Each pair of files is followed by the number of windows within which measurements will be made, followed by the time intervals for each window.
+Note that data and synthetics require to have exactly the same <code class="docutils literal notranslate"><span class="pre">t0</span></code>, <code class="docutils literal notranslate"><span class="pre">dt</span></code>, <code class="docutils literal notranslate"><span class="pre">npts</span></code> for the code to run through. Therefore
+no interpolation of <code class="docutils literal notranslate"><span class="pre">dt</span></code> is really necessary at any point.</p>
+</section>
+<section id="input-file-2-measurement-par">
+<h3>Input file 2: <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.PAR</span></code><a class="headerlink" href="#input-file-2-measurement-par" title="Link to this heading">¶</a></h3>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>  <span class="o">-</span><span class="mf">0.585</span> <span class="mf">0.0110</span>   <span class="mi">18200</span>  <span class="c1"># tstart, DT, npts: time vector for simulations</span>
+                      <span class="mi">7</span>  <span class="c1"># imeas (1-8; see manual)</span>
+                     <span class="n">BH</span>  <span class="c1"># channel of synthetics: BH or LH</span>
+      <span class="mf">30.000</span>      <span class="mf">6.000</span>  <span class="c1"># TLONG and TSHORT: band-pass periods for records</span>
+                <span class="o">.</span><span class="n">false</span><span class="o">.</span>  <span class="c1"># RUN_BANDPASS: use band-pass on records</span>
+                 <span class="o">.</span><span class="n">true</span><span class="o">.</span>  <span class="c1"># DISPLAY_DETAILS</span>
+                 <span class="o">.</span><span class="n">true</span><span class="o">.</span>  <span class="c1"># OUTPUT_MEASUREMENT_FILES</span>
+                 <span class="o">.</span><span class="n">true</span><span class="o">.</span>  <span class="c1"># COMPUTE_ADJOINT_SOURCE</span>
+     <span class="o">-</span><span class="mf">4.5000</span>     <span class="mf">4.5000</span>  <span class="c1"># TSHIFT_MIN; TSHIFT_MAX</span>
+     <span class="o">-</span><span class="mf">1.5000</span>     <span class="mf">1.5000</span>  <span class="c1"># DLNA_MIN; DLNA_MAX</span>
+                  <span class="mf">0.690</span>  <span class="c1"># CC_MIN</span>
+                      <span class="mi">1</span>  <span class="c1"># ERROR_TYPE -- 0 none; 1 CC, MT-CC; 2 MT-jack-knife (all for MTM!)</span>
+                  <span class="mf">1.000</span>  <span class="c1"># DT_SIGMA_MIN: water level of traveltime uncertainty</span>
+                  <span class="mf">0.500</span>  <span class="c1"># DLNA_SIGMA_MIN: water level of dlnA uncertainty</span>
+                      <span class="mi">1</span>  <span class="c1"># ITAPER:1 multi-taper; 2 cosine; 3 boxcar taper type for freq-dep. meas.</span>
+            <span class="mf">0.020</span>  <span class="mf">2.50</span>  <span class="c1"># WTR, NPI (ntaper = 2*NPI)</span>
+                  <span class="mf">2.000</span>  <span class="c1"># DT_FAC (following 4 pars are for MTM --&gt; CC check)</span>
+                  <span class="mf">2.500</span>  <span class="c1"># ERR_FAC</span>
+                  <span class="mf">3.500</span>  <span class="c1"># DT_MAX_SCALE</span>
+                  <span class="mf">1.500</span>  <span class="c1"># NCYCLE_IN_WINDOW</span>
+</pre></div>
+</div>
+<p>The names below correspond to the variable names in <code class="docutils literal notranslate"><span class="pre">mt_measure_adj</span></code> (see subroutine <code class="docutils literal notranslate"><span class="pre">read_par_file</span></code> in <code class="docutils literal notranslate"><span class="pre">mt_sub.f90</span></code>).</p>
+<ul class="simple">
+<li><p>Time vector: <code class="docutils literal notranslate"><span class="pre">tt</span></code> (start time), <code class="docutils literal notranslate"><span class="pre">dtt</span></code> (time step), <code class="docutils literal notranslate"><span class="pre">nn</span></code> (number of points). These values are particularly important if adjoint sources are requested. Based on the convention in <strong>SPECFEM3D</strong>, for example, it is best to select the start time to be <span class="math notranslate nohighlight">\(t_0 = -1.5 \tau_{\rm h}\)</span>, where <span class="math notranslate nohighlight">\(\tau_{\rm h}\)</span> is the half duration of the CMT source. The time step and the number of time steps should exactly match the time file of the <strong>SPECFEM3D</strong> synthetics.</p></li>
+<li><p>Option for measurement: <code class="docutils literal notranslate"><span class="pre">imeas0</span></code> = 1–8 (see <a class="reference internal" href="#meas"><span class="std std-ref">Measurement options</span></a>).</p></li>
+<li><p>Channel: <code class="docutils literal notranslate"><span class="pre">chan</span></code> is BH or LH (based on options for SEM synthetics).</p></li>
+<li><p>Bandpass range: <code class="docutils literal notranslate"><span class="pre">TLONG</span></code> (long-period), <code class="docutils literal notranslate"><span class="pre">TSHORT</span></code> short-period</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">RUN_BANDPASS</span></code>: whether to bandpass the seismograms.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">OUTPUT_MEASUREMENT_FILES</span></code>: whether to output measurement files for each window.</p></li>
+<li><p>Limits on cross-correlation measurement: <code class="docutils literal notranslate"><span class="pre">TSHIFT_MIN</span></code>; <code class="docutils literal notranslate"><span class="pre">TSHIFT_MAX</span></code>. These can optionally be read in from the <code class="docutils literal notranslate"><span class="pre">PAR_FILE</span></code> used in the FLEXWIN algorithm.</p></li>
+<li><p>Limits on amplitude measurement: <code class="docutils literal notranslate"><span class="pre">DLNA_MIN</span></code>; <code class="docutils literal notranslate"><span class="pre">DLNA_MAX</span></code>. These can optionally be read in from the <code class="docutils literal notranslate"><span class="pre">PAR_FILE</span></code> used in the FLEXWIN algorithm.</p></li>
+<li><p>Limits on the cross-correlation measurement: <code class="docutils literal notranslate"><span class="pre">CC_MIN</span></code>. This can optionally be read in from the <code class="docutils literal notranslate"><span class="pre">PAR_FILE</span></code> used in the FLEXWIN algorithm.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">ERROR_TYPE</span></code> = 0–2: Type of estimated errors associated with \blue{multi-taper} measurement (and adjoint source). No error (0), cross-correlation error estimate (1), multitaper jack-knife error estimate (2).  The cross-correlation error estimate is presented in Appendix A <span id="id5">[<a class="reference internal" href="#id12" title="C. H. Tape, Q. Liu, A. Maggi, and J. Tromp. Seismic tomography of the southern California crust based on spectral-element and adjoint methods. Geophys. J. Int., 180:433–462, 2010. URL: http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04429.x, doi:10.1111/j.1365-246X.2009.04429.x.">Tape <em>et al.</em>, 2010</a>]</span>.  For <code class="docutils literal notranslate"><span class="pre">imeas</span></code>=5,6 (cc), <code class="docutils literal notranslate"><span class="pre">sigma_dt/dlnA_cc</span></code>
+is automatically used. For <code class="docutils literal notranslate"><span class="pre">ERROR_TYPE</span> <span class="pre">=</span> <span class="pre">0</span></code>, all <code class="docutils literal notranslate"><span class="pre">sigma_tau</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_dlnA</span></code> are set to be 1 for multitaper adjoint sources.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DT_SIGMA_MIN</span></code>: water-level minimum cross-correlation traveltime difference uncertainty estimate.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">DLNA_SIGMA_MIN</span></code>: water-level minimum amplitude difference uncertainty estimate.</p></li>
+<li><p>Multitaper parameter, <code class="docutils literal notranslate"><span class="pre">ITAPER</span></code>: Type of taper to use in constructing the transfer function between synthetics and data. Taper options are multitaper (1), cosine taper (2), and boxcar taper (3).  For the single-taper options (2–3) the transfer function is not used, as the adjoint sources are constructed directly from the synthetic seismograms. For the multitaper option, the number of tapers is fixed to be twice <code class="docutils literal notranslate"><span class="pre">NPI</span></code> (see <a class="reference external" href="https://github.com/geodynamics/specfem3d/blob/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj/USER_MANUAL/multitaper_vala.pdf">multitaper_vala.pdf</a>).</p></li>
+<li><p>Multitaper parameters, <code class="docutils literal notranslate"><span class="pre">WTR</span></code>, <code class="docutils literal notranslate"><span class="pre">NPI</span></code> (see <a class="reference external" href="https://github.com/geodynamics/specfem3d/blob/master/utils/ADJOINT_TOMOGRAPHY_TOOLS/measure_adj/USER_MANUAL/multitaper_vala.pdf">multitaper_vala.pdf</a>).</p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p><code class="docutils literal notranslate"><span class="pre">WTR</span></code> is also used to determine i_right corresponding to the maximum frequency of valid frequency-dependent measurements. It requires
+that the power at this frequency is above 10 times the <code class="docutils literal notranslate"><span class="pre">WTR*max_syn_power</span></code>.</p>
+</div>
+<ul class="simple">
+<li><p>Multitaper parameter, <code class="docutils literal notranslate"><span class="pre">DT_FAC</span></code> (see <a class="reference internal" href="#mtparm"><span class="std std-ref">Multitaper parameters</span></a>).</p></li>
+<li><p>Multitaper parameter, <code class="docutils literal notranslate"><span class="pre">ERR_FAC</span></code> (see <a class="reference internal" href="#mtparm"><span class="std std-ref">Multitaper parameters</span></a>).</p></li>
+<li><p>Multitaper parameter, <code class="docutils literal notranslate"><span class="pre">DT_MAX_SCALE</span></code> (see <a class="reference internal" href="#mtparm"><span class="std std-ref">Multitaper parameters</span></a>).</p></li>
+<li><p>Multitaper parameter, <code class="docutils literal notranslate"><span class="pre">NCYCLE_IN_WINDOW</span></code>, (see <a class="reference internal" href="#mtparm"><span class="std std-ref">Multitaper parameters</span></a>).</p></li>
+</ul>
+</section>
+<section id="multitaper-parameters">
+<span id="mtparm"></span><h3>Multitaper parameters<a class="headerlink" href="#multitaper-parameters" title="Link to this heading">¶</a></h3>
+<p>The selection of the multitaper parameters <code class="docutils literal notranslate"><span class="pre">DT_FAC</span></code>, <code class="docutils literal notranslate"><span class="pre">ERR_FAC</span></code>, <code class="docutils literal notranslate"><span class="pre">DT_MAX_SCALE</span></code>, and <code class="docutils literal notranslate"><span class="pre">NCYCLE_IN_WINDOW</span></code> are not easy for each particular dataset.  These parameters determine whether a multitaper measurement is reasonable enough to retain (otherwise revert to a cross-correlation measurement). The key subroutine is <code class="docutils literal notranslate"><span class="pre">mt_measure_select.f90</span></code>.</p>
+<p>MTMs are rejected (<code class="docutils literal notranslate"><span class="pre">user_trace</span> <span class="pre">=</span> <span class="pre">.false.</span></code>) based on:</p>
+<ul class="simple">
+<li><p>number of cycles in the window</p></li>
+<li><p>number of frequency points given within <code class="docutils literal notranslate"><span class="pre">[fstart,fend]</span></code>. Even when <code class="docutils literal notranslate"><span class="pre">RUN_BANDPASS</span></code> is turned off, the <code class="docutils literal notranslate"><span class="pre">TLONG</span></code> and <code class="docutils literal notranslate"><span class="pre">TSHORT</span></code> are still converted to <code class="docutils literal notranslate"><span class="pre">fstart,fend</span></code>. They are best set to the values used in <code class="docutils literal notranslate"><span class="pre">FLEXWIN</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tshift_cc</span> <span class="pre">&lt;=</span> <span class="pre">dt</span></code>: too small a time shift</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abs(dtau_w(j))</span> <span class="pre">&gt;</span> <span class="pre">Tvec(j)/DT_FAC</span></code>: <span class="math notranslate nohighlight">\(\tau\)</span> at a specific frequency is too high</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">err_dt(j)</span> <span class="pre">&gt;</span> <span class="pre">Tvec(j)/ERR_FAC</span></code>: error for a specific frequency is too high</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">abs(dtau_w(j))</span> <span class="pre">&gt;</span> <span class="pre">DT_MAX_SCALE*abs(tshift))</span></code> <span class="math notranslate nohighlight">\(\tau\)</span> at specific frequency deviates too much for global <code class="docutils literal notranslate"><span class="pre">tshift_cc</span></code></p></li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The cross-correlation measurements are then run through <code class="docutils literal notranslate"><span class="pre">cc_measure_select()</span></code> to determine if they are usable or not (<code class="docutils literal notranslate"><span class="pre">tshift,</span> <span class="pre">dlnA</span> <span class="pre">=</span> <span class="pre">0</span></code>).</p>
+</div>
+<p>Two example sets of parameters are given</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! ********* adjust following for global traces ************************
+  ! ratio of current period with respect to dt and err_dt measurements
+  double precision, parameter :: DT_FAC = 1.0
+  double precision, parameter :: ERR_FAC = 8.0
+  ! max time shift allowed at all freq should be DT_MAX_SCALE * Tshift_xc
+  double precision, parameter :: DT_MAX_SCALE = 5.0
+  ! few cycles for surfaces waves
+  double precision, parameter :: NCYCLE_IN_WINDOW = 2.0 ! window length &gt; 2.*50
+!***********************************************************************
+
+! ********* adjust following for socal 3-30s traces ********************
+  ! ratio of current period with respect to dt and err_dt measurements
+  double precision, parameter :: DT_FAC = 2.0
+  double precision, parameter :: ERR_FAC = 2.5
+  ! max time shift allowed at all freq should be DT_MAX_SCALE * Tshift_xc
+  double precision, parameter :: DT_MAX_SCALE = 3.5
+  ! use 3 cycles for surfaces waves
+  double precision, parameter :: NCYCLE_IN_WINDOW = 1.5
+!***********************************************************************
+</pre></div>
+</div>
+</section>
+<section id="output-files">
+<h3>Output files<a class="headerlink" href="#output-files" title="Link to this heading">¶</a></h3>
+<p>There are two output files related to measurements in the local run directory:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">window_chi</span></code>, a comprehensive output file of misfit values, with one line per window.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>! KEY: write misfit function values to file (for each window)
+! Here are some columns of values in window_chi (add 8 for the actual column number)
+!  1: MT-TT chi (imeas=7),    2: MT-dlnA chi (imeas=8)
+!  3: XC-TT chi (imeas=5),    4: XC-dlnA chi (imeas=6)
+!  5: MT-TT meas (freq-average),   6: MT-dlnA meas,   7: XC-TT meas,   8: XC-dlnA meas
+!  9: MT-TT error, 10: MT-dlnA error, 11: XC-TT error, 12: XC-dlnA error
+! WINDOW     : 13: data power, 14: syn power, 15: (data-syn) power, 16: window duration
+! FULL RECORD: 17: data power, 18: syn power, 19: (data-syn) power, 20: record duration
+! WINDOW     : 21: tr_chi,       22: am_chi
+! Example of a reduced file: awk &#39;{print $2,$3,$4,$5,$6,$29}&#39; window_chi &gt; window_tr_chi
+
+write(13,&#39;(a14,a8,a3,a5,i4,i4,2e14.6,20e14.6,2e14.6,2f14.6)&#39;) &amp;
+   file_prefix0,sta,net,chan_syn,j,imeas,&amp;
+   tstart,tend,window_chi(:),tr_chi,am_chi,T_pmax_dat,T_pmax_syn
+
+! misfit function value
+if(is_mtm==1) window_chi(1) = 0.5 * 2.0 * df * sum( (dtau_w(1:i_right))**2 * wp_taper(1:i_right) ) ! tr_chi
+if(is_mtm==1) window_chi(2) = 0.5 * 2.0 * df * sum( (dlnA_w(1:i_right))**2 * wq_taper(1:i_right) ) ! amp_chi
+window_chi(3) = 0.5 * (tshift/sigma_dt_cc)**2 ! tr_chi
+window_chi(4) = 0.5 * (dlnA/sigma_dlnA_cc)**2 ! amp_chi
+! cc/averaged-mt tshift/dlnA measurement
+if(is_mtm==1) window_chi(5)  = sum( dtau_w(1:i_right) * w_taper(1:i_right) ) / sum(w_taper(1:i_right) )
+if(is_mtm==1) window_chi(6)  = sum( dlnA_w(1:i_right) * w_taper(1:i_right) ) / sum(w_taper(1:i_right) )
+window_chi(7) = tshift
+window_chi(8) = dlnA
+! estimated measurement uncertainties
+if(is_mtm==1) window_chi(9) = sigma_dt
+if(is_mtm==1) window_chi(10) = sigma_dlnA
+window_chi(11) = sigma_dt_cc
+window_chi(12) = sigma_dlnA_cc
+! for normalization, divide by duration of window
+window_chi(13) = 0.5 * sum(dat_dtw(:)**2)
+window_chi(14) = 0.5 * sum(syn_dtw(:)**2)
+window_chi(15) = 0.5 * sum((dat_dtw-syn_dtw)**2) ! tr/amp_chi for imeas=1/2
+window_chi(16) = nlen*dt
+window_chi(17) = 0.5 * sum( data**2 ) ! power of entire trace
+window_chi(18) = 0.5 * sum( syn**2 )
+window_chi(19) = 0.5 * sum( (data-syn)**2 )
+window_chi(20) = npts*dt
+</pre></div>
+</div>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">window_index</span></code>, an abbreviated output file with the indexing for each window. The columns are</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">write</span><span class="p">(</span><span class="mi">12</span><span class="p">,</span><span class="s1">&#39;(a3,a8,a5,a5,3i5,2f12.3)&#39;</span><span class="p">)</span> <span class="n">net</span><span class="p">,</span><span class="n">sta</span><span class="p">,</span><span class="n">chan_syn</span><span class="p">,</span><span class="n">chan_dat</span><span class="p">,</span><span class="n">nwin</span><span class="p">,</span><span class="n">ipair</span><span class="p">,</span><span class="n">j</span><span class="p">,</span><span class="n">tstart</span><span class="p">,</span><span class="n">tend</span>
+</pre></div>
+</div>
+<p>where <code class="docutils literal notranslate"><span class="pre">nwin</span></code> is the overall window counter, <code class="docutils literal notranslate"><span class="pre">ipair</span></code> is the seismogram (pair) counter, and <code class="docutils literal notranslate"><span class="pre">j</span></code> is the local window counter. For example, for the test case run:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CI</span> <span class="n">MPM</span>     <span class="n">BHR</span>  <span class="n">BHR</span>      <span class="mi">1</span>    <span class="mi">1</span>    <span class="mi">1</span>      <span class="mf">11.277</span>      <span class="mf">58.477</span>
+<span class="n">CI</span> <span class="n">MPM</span>     <span class="n">BHR</span>  <span class="n">BHR</span>      <span class="mi">2</span>    <span class="mi">1</span>    <span class="mi">2</span>      <span class="mf">58.477</span>      <span class="mf">81.377</span>
+<span class="n">CI</span> <span class="n">MPM</span>     <span class="n">BHR</span>  <span class="n">BHR</span>      <span class="mi">3</span>    <span class="mi">1</span>    <span class="mi">3</span>      <span class="mf">81.377</span>     <span class="mf">101.677</span>
+<span class="n">CI</span> <span class="n">MPM</span>     <span class="n">BHT</span>  <span class="n">BHT</span>      <span class="mi">4</span>    <span class="mi">2</span>    <span class="mi">1</span>      <span class="mf">49.327</span>      <span class="mf">95.327</span>
+<span class="n">CI</span> <span class="n">MPM</span>     <span class="n">BHZ</span>  <span class="n">BHZ</span>      <span class="mi">5</span>    <span class="mi">3</span>    <span class="mi">1</span>      <span class="mf">60.977</span>      <span class="mf">99.377</span>
+</pre></div>
+</div>
+<p>With <code class="docutils literal notranslate"><span class="pre">COMPUTE_ADJOINT_SOURCE</span> <span class="pre">=</span> <span class="pre">.true.</span></code>,</p>
+<ol class="arabic simple">
+<li><p>adjoint source files (e.g., <code class="docutils literal notranslate"><span class="pre">MPM.CI.BHZ.iker07.adj</span></code>) will appear
+in <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILES/</span></code>. These are ascii files with the time colume defined by <code class="docutils literal notranslate"><span class="pre">tstart,DT,npts</span></code> in the parameter file.
+(if <code class="docutils literal notranslate"><span class="pre">DO_RAY_DENSITY_SOURCE</span> <span class="pre">=</span> <span class="pre">.true.</span></code>, adjoint file names are <code class="docutils literal notranslate"><span class="pre">MPM.CI.BHZ.iker7.density.adj</span></code>).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">window_chi_sum</span></code> in local directory, the sum of misfit values (CC or MTM) of all windows, with weights taken into account if <code class="docutils literal notranslate"><span class="pre">DO_WEIGHTING</span> <span class="pre">=</span> <span class="pre">.true.</span></code>. This scalar value literally corresponds to all the adjoint sources produced in  <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILES/</span></code>. If input includes all windows for a particular event, this scalar value is the event misfit.
+More comprehensive sum of misfit can be found in the script <code class="docutils literal notranslate"><span class="pre">/ADJOINT_TOMO/iterate_adj/matlab/compute_misfit.m</span></code></p></li>
+</ol>
+<p>With <code class="docutils literal notranslate"><span class="pre">OUTPUT_MEASUREMENT_FILES</span> <span class="pre">=</span> <span class="pre">.true.</span></code> in <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.PAR</span></code>, you should find numerous output files in <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILES/</span></code>.
+Other files include (<code class="docutils literal notranslate"><span class="pre">prefix=MPM.CI.BHZ.01.mtm</span></code>, <code class="docutils literal notranslate"><span class="pre">prefix0=MPM.CI.BHZ</span></code>)</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prefix</span><span class="o">.</span><span class="n">recon_syn_cc</span><span class="o">.</span><span class="n">sac</span>             <span class="c1"># syn_dtw_cc</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">recon_syn_cc_dt</span><span class="o">.</span><span class="n">sac</span>          <span class="c1"># syn_dtw_cc_dt</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">dt</span><span class="o">/</span><span class="n">dlnA_average</span><span class="o">/</span><span class="n">cc</span>           <span class="c1"># dtau/dlnA_meas, dtaul/dlnA_sigma (&#39;average&#39; means &#39;mtm&#39;)</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">ph</span><span class="o">/</span><span class="nb">abs</span><span class="o">/</span><span class="n">dlnA</span><span class="o">/</span><span class="n">ph_cor</span><span class="o">/</span><span class="n">dt</span>        <span class="c1"># transfer fun.:  phi/abs/log(abs)/phi(corr)/dtau(idf_new:idf_new:i_right)</span>
+                                    <span class="c1">#                 tshift/dlnA from cc are added to dtau/dlnA_wt</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">recon_syn</span><span class="o">.</span><span class="n">sac</span>                <span class="c1"># recon. syn with both dtau(om) and dlnA(om) applied for all imeas &gt;=3 cases.</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">recon_syn_dt</span><span class="o">.</span><span class="n">sac</span>             <span class="c1"># reconstructed syn with only dtau(om) applied</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">err_ph</span><span class="o">/</span><span class="nb">abs</span><span class="o">/</span><span class="n">dt</span><span class="o">/</span><span class="n">dlnA</span><span class="p">[</span><span class="n">_full</span><span class="p">]</span>    <span class="c1"># err_phi/abs/dt/dlnA_mtm(idf_new:idf_new:i_right)</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">freq_limits</span>                  <span class="c1"># fstart/fend (input),df, fstart/fend(adjusted for given window)</span>
+<span class="n">prefix0</span><span class="o">.</span><span class="n">recon</span><span class="o">.</span><span class="n">sac</span>                   <span class="c1"># recon. syn after applying CC or MTM for the entire data trace</span>
+</pre></div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">DISPLAY_MORE_DETAILS</span> <span class="pre">=</span> <span class="pre">.true.</span></code> in the parameter file, following files will be written for every window pair</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prefix</span><span class="o">.</span><span class="n">obs</span> <span class="p">(</span><span class="n">original</span> <span class="n">data</span><span class="o">/</span><span class="n">syn</span><span class="p">)</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">syn</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">dat</span><span class="o">.</span><span class="n">sac</span> <span class="p">(</span><span class="n">time</span> <span class="n">windowed</span> <span class="n">data</span><span class="o">/</span><span class="n">syn</span><span class="p">)</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">syn</span><span class="o">.</span><span class="n">sac</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">obs</span><span class="o">.</span><span class="n">power</span> <span class="o">%</span> <span class="nb">abs</span><span class="p">(</span><span class="n">dat_dtwo</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i_right</span><span class="p">)),</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="n">dat_dtw_cc</span>
+<span class="n">prefix</span><span class="o">.</span><span class="n">syn</span><span class="o">.</span><span class="n">power</span> <span class="o">%</span> <span class="nb">abs</span><span class="p">(</span><span class="n">syn_dtwo</span><span class="p">(</span><span class="mi">1</span><span class="p">:</span><span class="n">i_right</span><span class="p">)),</span> <span class="n">i</span><span class="o">.</span><span class="n">e</span><span class="o">.</span><span class="p">,</span> <span class="n">syn_dtw</span>
+</pre></div>
+</div>
+</section>
+<section id="scripts">
+<h3>Scripts<a class="headerlink" href="#scripts" title="Link to this heading">¶</a></h3>
+<p>The three scripts in the run directory are</p>
+<ol class="arabic simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">write_par_file.pl</span></code>. Write the file <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.PAR</span></code> from a given set of parameters. This is called within the run scripts in <code class="docutils literal notranslate"><span class="pre">scripts_tomo</span></code>.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">prepare_adj_src.pl</span></code>. This script reads in a set of adjoint sources made from Z-R-T records and outputs a set of adjoint sources in Z-E-N that can be used in SPECFEM3D.</p></li>
+</ol>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">prepare_adj_src</span><span class="o">.</span><span class="n">pl</span> <span class="o">-</span><span class="n">m</span> <span class="n">CMT</span> <span class="o">-</span><span class="n">z</span> <span class="n">BH</span> <span class="o">-</span><span class="n">s</span> <span class="n">STATION</span> <span class="o">-</span><span class="n">o</span> <span class="n">OUTDIR</span> <span class="o">-</span><span class="n">i</span> <span class="p">[</span><span class="n">rotation</span><span class="p">]</span> <span class="n">all_adj_ZRT_files</span>
+<span class="n">prepare_adj_src</span><span class="o">.</span><span class="n">pl</span> <span class="o">-</span><span class="n">m</span> <span class="n">CMTSOLUTION_9818433</span> <span class="o">-</span><span class="n">s</span> <span class="n">PLOTS</span><span class="o">/</span><span class="n">STATIONS_TOMO</span> <span class="o">-</span><span class="n">o</span> <span class="n">ADJOINT_SOURCES</span> \
+                   <span class="n">OUTPUT_FILES</span><span class="o">/*</span><span class="n">adj</span>
+</pre></div>
+</div>
+<p>It loops over all the stations with adjoint sources present in <code class="docutils literal notranslate"><span class="pre">OUTPUT_FILES</span></code>, and write an associate <code class="docutils literal notranslate"><span class="pre">STATION_ADJOINT</span></code> to local dir. It also rotates adjoint sources to E-N-Z, and deposits them into <code class="docutils literal notranslate"><span class="pre">ADJOINT_SOURCES</span></code> dir.
+The key is that it will create an all-zeros record if no measurement is made on a particular component (say, Z), but IS made on another component (say, R or T). It uses the following fortran program:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>rotate_adj_src baz(radian!) zfile tfile rfile efile nfile
+</pre></div>
+</div>
+<p>The perl script also outputs <code class="docutils literal notranslate"><span class="pre">STATIONS_ADJOINT</span></code> file for all the stations with adjoint sources.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">combine_adj_src.pl</span></code>. This script combines two sets of adjoint sources (for example, two different bandpassed versions), and outputs the new adjoint sources, along with a new <code class="docutils literal notranslate"><span class="pre">STATIONS_ADJOINT</span></code> file to be used.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Usage</span><span class="p">:</span> <span class="n">combine_adj_src</span><span class="o">.</span><span class="n">pl</span> <span class="n">DIR_1</span> <span class="n">DIR_2</span> <span class="n">DIR_NEW</span> <span class="n">imeas1</span> <span class="n">imeas2</span> <span class="n">chan</span>
+</pre></div>
+</div>
+<p>Adjoint sources from <code class="docutils literal notranslate"><span class="pre">dir1</span></code> and <code class="docutils literal notranslate"><span class="pre">dir2</span></code> with the same station/net/component names are added up; station files from <code class="docutils literal notranslate"><span class="pre">dir1/STATIONS_ADJOINT</span></code> and<code class="docutils literal notranslate"><span class="pre">dir2/STATIONS_ADJOINT</span></code> are combined into <code class="docutils literal notranslate"><span class="pre">dir_new/STATIONS_ADJOINT</span></code>.</p>
+<p>Scripts in the <code class="docutils literal notranslate"><span class="pre">PLOT/</span></code> directory:</p>
+<ul class="simple">
+<li><p>The primary plotting script is <code class="docutils literal notranslate"><span class="pre">PLOTS/plot_win_adj.pl</span></code>.</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_win_adj_all</span><span class="o">.</span><span class="n">pl</span> <span class="o">-</span><span class="n">m</span> <span class="n">CMTFILE</span> <span class="o">-</span><span class="n">a</span> <span class="n">STATION_FILE</span> <span class="o">-</span><span class="n">n</span> <span class="n">chan</span> <span class="o">-</span><span class="n">b</span> <span class="n">iboth</span> <span class="o">-</span><span class="n">l</span> <span class="n">tmin</span><span class="o">/</span><span class="n">tmax</span> \
+    <span class="o">-</span><span class="n">k</span> <span class="n">imeas</span><span class="o">/</span><span class="n">iadj</span> <span class="o">-</span><span class="n">d</span> <span class="n">data_dir</span> <span class="o">-</span><span class="n">s</span> <span class="n">syn_dir</span> <span class="o">-</span><span class="n">c</span> <span class="n">recon_dir</span> <span class="o">-</span><span class="n">w</span> <span class="n">winfile</span> <span class="o">-</span><span class="n">i</span> <span class="n">smodel</span> <span class="o">-</span><span class="n">j</span> <span class="n">Tmin</span><span class="o">/</span><span class="n">Tmax</span>
+<span class="n">plot_win_adj_all</span><span class="o">.</span><span class="n">pl</span> <span class="o">-</span><span class="n">l</span> <span class="o">-</span><span class="mi">10</span><span class="o">/</span><span class="mi">200</span> <span class="o">-</span><span class="n">m</span> <span class="o">../</span><span class="n">CMTSOLUTION_9818433</span> <span class="o">-</span><span class="n">n</span> <span class="n">BH</span> <span class="o">-</span><span class="n">b</span> <span class="mi">0</span> <span class="o">-</span><span class="n">k</span> <span class="mi">7</span><span class="o">/</span><span class="mi">1</span> \
+    <span class="o">-</span><span class="n">a</span> <span class="n">STATIONS_ADJOINT</span> <span class="o">-</span><span class="n">d</span> <span class="n">DATA</span> <span class="o">-</span><span class="n">s</span> <span class="n">SYN</span> <span class="o">-</span><span class="n">c</span> <span class="n">RECON</span> <span class="o">-</span><span class="n">w</span> <span class="n">MEASUREMENT</span><span class="o">.</span><span class="n">WINDOWS</span> <span class="o">-</span><span class="n">i</span> <span class="n">m16</span> <span class="o">-</span><span class="n">j</span> <span class="mi">6</span><span class="o">/</span><span class="mi">30</span>
+</pre></div>
+</div>
+<p>which uses another script</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>plot_win_adj.pl -m $cmtfile -n $sta/$net/$chan -b $iboth -l $tcuts -k $opt_k \
+   -a $station_list -d $data_dir -s $syn_dir -c $recon_dir -w $winfile -i $smodel -j $Ts
+plot_win_adj.pl -m ../CMTSOLUTION_9818433 -n MPM/CI/BH -b 0 -l -10/200 -k 7/1 \
+   -a STATIONS_ADJOINT -d DATA -s SYN -c RECON -w MEASUREMENT.WINDOWS -i m16 -j 6/30
+</pre></div>
+</div>
+<p>gives plots of detailed information on data, syn, reconstructed syn and corresponding adjoint sources, as well as
+source/station distributions on a map (Figure <a class="reference internal" href="#iker07"><span class="std std-ref">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a multitaper traveltime difference (imeas = 7).</span></a> for MTM, <code class="docutils literal notranslate"><span class="pre">imeas=7</span></code>)</p>
+<p>Some tweaking is probably necessary before successful application to a different dataset, including: setting <code class="docutils literal notranslate"><span class="pre">evid</span></code> in CMT file (correspond to data name <code class="docutils literal notranslate"><span class="pre">evid.net.sta</span></code>), setting corresponding <code class="docutils literal notranslate"><span class="pre">kstnam,knetwk,kcmpnm</span></code> for both data and synthetics, setting o header properly, and all synthetics need to be present (data/recon-syn not needed).</p>
+<ul class="simple">
+<li><p>plot the statistics of window files (check file structure before use)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">plot_win_stats_all</span><span class="o">.</span><span class="n">pl</span> <span class="n">Tmin</span><span class="o">/</span><span class="n">Tmax</span> <span class="n">model</span> <span class="n">iplot</span> <span class="p">[</span><span class="n">plot</span> <span class="n">histogram</span> <span class="ow">or</span> <span class="ow">not</span><span class="p">]</span>
+<span class="n">plot_win_stats</span><span class="o">.</span><span class="n">pl</span> <span class="n">Tmin</span><span class="o">/</span><span class="n">Tmax</span> <span class="n">eid</span> <span class="n">name</span> <span class="n">meas_file</span> <span class="n">sta_file</span> <span class="n">eid_text</span> <span class="n">cmtall_psmeca</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>organize <code class="docutils literal notranslate"><span class="pre">plot_win_adj_all.pl</span></code> output by station or event (???)</p></li>
+</ul>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">make_pdf_by_event</span><span class="o">.</span><span class="n">pl</span>
+<span class="n">make_pdf_by_station</span><span class="o">.</span><span class="n">pl</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li><p>For large datasets, we have included an additional set of scripts in the directory <code class="docutils literal notranslate"><span class="pre">scripts_tomo</span></code>. Each user will have to make some modifications to these scripts.</p></li>
+<li><p>For plotting output files for individual measurements, we have included a set of scripts in <code class="docutils literal notranslate"><span class="pre">scripts_meas</span></code>.  These scripts have not been extensively tested.</p></li>
+</ul>
+</section>
+</section>
+<section id="measurement-options">
+<span id="meas"></span><h2>Measurement options<a class="headerlink" href="#measurement-options" title="Link to this heading">¶</a></h2>
+<p>There are several choices of measurements (or definitions of misfit functions), and each choice leads to a different adjoint source, as illustrated in <span id="id6">Tromp <em>et al.</em> [<a class="reference internal" href="#id11" title="J. Tromp, C. H. Tape, and Q. Liu. Seismic tomography, adjoint methods, time reversal and banana-doughnut kernels. Geophys. J. Int., 160:195–216, 2005. URL: http://scholar.google.com/scholar?hl=en\&amp;btnG=Search\&amp;q=intitle:Seismic+tomography,+adjoint+methods,+time+reversal+and+banana-doughnut+kernels\#0.">2005</a>]</span>. The user must specify a value of <code class="docutils literal notranslate"><span class="pre">imeas</span></code> in <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.PAR</span></code> with the following options:</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">1</span></code>, normalized waveform difference. Adjoint source is constructed from the <em>data only</em>, with the form <span class="math notranslate nohighlight">\(-d(t)/\|d(t)\|^2\)</span>.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = \frac{1}{2}\frac{\int [d(t)-s(t)]^2\,dt }{\int d^2(t)\,dt} \quad \text{at}\quad s(t)=0\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = -\frac{d(t)}{\|d(t)\|^2}\]</div>
+</div>
+<p>If <code class="docutils literal notranslate"><span class="pre">NO_WAVEFORM_DIFFERENCE</span> <span class="pre">=</span> <span class="pre">.true.</span></code>, this becomes (why???)</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = d(t)\]</div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">2</span></code>, waveform difference, <span class="math notranslate nohighlight">\(s(t) - d(t)\)</span>.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = \frac{1}{2}\int [d(t)-s(t)]^2\,dt\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = s(t)-d(t)\]</div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">3</span></code>, cross-correlation traveltime for a (banana-doughtnut) sensitivity kernel. The measurement between data and synthetics <em>is not used</em> in constructing the adjoint source.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = T_{syn}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi = \delta{T_{syn}} = - \frac{\int w(t) \dot{s}(t) \delta s(t)\,dt}{\int w(t) \dot{s}^2(t)\,dt}
+\quad\quad\quad\text{TTL (43)}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = -\frac{w(t)\dot{s}(t)}{\int w(t) \dot{s}^2(t)\,dt}\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(w(t)\)</span> is the time window over which the measurement is made.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">4</span></code>, amplitude difference for a (banana-doughtnut) sensitivity kernel. The measurement between data and synthetics <em>is not used</em> in constructing the adjoint source.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = \ln A_{syn}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi = \delta ln A_{syn} = \frac{\int w(t)s(t)\delta s(t)\,dt}{\int w(t) s^2(t)\,dt}
+\quad\quad\quad\text{TTL (64)}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = \frac{w(t) s(t)}{\int w(t) s^2(t)\,dt}\]</div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">5</span></code>, cross-correlation traveltime difference for an event kernel.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = \frac{1}{2}\sum_{rp}\left[ \frac{T_{obs}-T_{syn}}{\sigma_{\Delta T}} \right]^2 \]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi = - \sum_{rp} \frac{T_{obs}-T_{syn}}{\sigma^2_{\Delta T}}\, \delta{T_{syn}} = \sum_{rp} \frac{ \Delta T_{syn}}{\sigma^2_{\Delta T}}
+\frac{\int w(t) \dot{s}(t) \delta s(t)\,dt}{\int w(t) \dot{s}^2(t)\,dt}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = \sum_{rp} \frac{w(t)\dot{s}(t)}{\int w(t) \dot{s}^2(t)\,dt}  \frac{ \Delta T_{syn}}{\sigma^2_{\Delta T}}\]</div>
+</div>
+<p>where the traveltime <em>delay</em> of observed data w.r.t. synthetics <span class="math notranslate nohighlight">\(\Delta T_{syn}= T_{obs}-T_{syn}\)</span> <em>is used</em>  in constructing the adjoint source. The summation is performed over receivers (<span class="math notranslate nohighlight">\(r\)</span>) and phases (<span class="math notranslate nohighlight">\(p\)</span>).</p>
+<p>Note the cross-correlation related measurements, including <code class="docutils literal notranslate"><span class="pre">tshift,</span> <span class="pre">dlnA,</span> <span class="pre">cc_max</span></code> given by <code class="docutils literal notranslate"><span class="pre">compute_syn_cc()</span></code> correspond to</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[cc_i = \frac{\sum_j s_j d_{j+i}}{\sum_j s_j s_j},\quad \Delta T = i_{max}*dt,
+\quad
+\Delta \ln A = \frac{1}{2} \ln \left[\frac{\int d^2(t) dt}{\int s^2(t) dt}\right],\]</div>
+</div>
+<p>and average error estimates are given by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\sigma_{\Delta T} = \sqrt{\frac{\int[d(t)-s_c(t)]^2\,dt}{\int \dot{s}^2_c(t)\,dt}},\quad
+\sigma_{\Delta lnA} = \sqrt{\frac{\int[d(t)-s_c(t)]^2\,dt}{\int s^2_{ct}(t)\,dt}}\]</div>
+</div>
+</li>
+</ul>
+<p>where <span class="math notranslate nohighlight">\(s_c(t)\)</span> is the reconstructed synthetics after applying <span class="math notranslate nohighlight">\(\Delta T\)</span> and <span class="math notranslate nohighlight">\(\Delta \ln A\)</span> corrections.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">6</span></code>, amplitude difference for an event kernel. As</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[d(t) \sim \exp(\Delta \ln A)\, s(t) \sim (1+\Delta \ln A_{syn})\, s(t)\]</div>
+</div>
+<p>the misfit of amplitude anomaly may be defined by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi = \frac{1}{2}\sum_{rp}\left[\frac{\ln A_{obs} - \ln A_{syn}}{\sigma_{\Delta lnA}}\right]^2
+= \sum_{rp}\frac{1}{2}\left[\frac{\Delta \ln A}{\sigma_{\Delta lnA}}\right]^2\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi = -\sum_{rp}\frac{\Delta \ln A}{\sigma^2_{\Delta lnA}}\,\delta ln A = -\sum_{rp} \frac{\Delta \ln A}{\sigma^2_{\Delta lnA}} \frac{\int w(t)s(t)\delta s(t)\,dt}{\int w(t) s^2(t)\,dt}\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger(t) = -\sum_{rp}\frac{w(t) s(t)}{\int w(t) s^2(t)\,dt} \frac{\Delta \ln A}{\sigma^2_{\Delta lnA}}\]</div>
+</div>
+<p>where the measurement amplitude anomaly between data and synthetics <span class="math notranslate nohighlight">\(\Delta \ln A = \ln A_{obs}-\ln A_{syn} \sim A_{obs}/A_{syn} -1\)</span> <em>is used</em> in constructing the adjoint source.</p>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">7</span></code>, multitaper traveltime difference for an event kernel. The measurement between data and synthetics <em>is used</em> in constructing the adjoint source. See <em>multitaper_notes.pdf</em>.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi_P(\mathbf{m})= \frac{1}{2}\sum_{rp} \int W_{P_{rp}}(\omega) \left[\tau_{rp}^{obs}(\omega) - \tau_{rp}(\omega,\mathbf{m})\right]^2\, d\omega \]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi_P = -\sum_{rp}\int W_{P_{rp}}(\omega) \Delta \tau_{rp}(\omega, \mathbf{m}) \delta \tau_{rp}(\omega,\mathbf{m})\,d\omega \]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger_P(t) = \sum_{rp}\sum_j h_j(t) P_j(t), \quad P_j(\omega)=W_{P_{rp}}(\omega) \Delta \tau_{rp}(\omega) p_j(\omega),\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[p_j(\omega)=\frac{i\omega s_j(\omega)}{\sum_k |(i\omega) s_k(\omega)|^2}, \quad s_j(t)=s(t,\mathbf{m})h_j(t)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta \tau_{rp}(\omega,\mathbf{m})=\tau^{obs}_{rp}(\omega)-\tau_{rp}(\omega,\mathbf{m})\)</span> is the frequency-dependent traveltime (*delay) measurements,</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[W_{P_{rp}}(\omega)=\frac{W_{rp}(\omega)}{\sigma_{P_{rp}}^2(\omega)\int\,W_{rp}(\omega)d\omega}\]</div>
+</div>
+<p>is the frequency domain taper scaled by error estimates, and <span class="math notranslate nohighlight">\(h_j(t)\)</span> is the <span class="math notranslate nohighlight">\(j\)</span>’th time-domain single taper applied to synthetics.
+The frequency domain taper between <span class="math notranslate nohighlight">\([f_1,f_2]\)</span> may be defined by</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[W_{rp}(f)=1-\left[\cos\frac{\pi(f-f_1)}{f_2-f_1}\right]^\gamma, \quad \gamma = 10\]</div>
+</div>
+</li>
+<li><p><code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">8</span></code>, multitaper amplitude difference for an event kernel. The measurement between data and synthetics <em>is used</em> in constructing the adjoint source. See <code class="docutils literal notranslate"><span class="pre">multitaper_notes.pdf</span></code>.</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\phi_Q(\mathbf{m}) = \frac{1}{2}\sum_{rp} \int W_{Q_{rp}}(\omega) \left[ \ln A_{rp}^{obs}(\omega) - \ln A_{rp}(\omega,\mathbf{m})\right]^2\, d\omega \]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi_Q = -\sum_{rp}\int W_{Q_{rp}}(\omega) \Delta \ln A_{rp}(\omega, \mathbf{m}) \delta \ln A_{rp}(\omega,\mathbf{m})\,d\omega \]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[f^\dagger_Q(t) = \sum_{rp}\sum_j h_j(t) Q_j(t), \quad  Q_j(\omega)=W_{Q_{rp}}(\omega) \Delta \ln A_{Q_{rp}}(\omega) q_j(\omega),\]</div>
+</div>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\quad\quad q_j(\omega)= -\frac{s_j}{\sum_k |s_k|^2}= i\omega p_j(\omega)\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(\Delta \ln A_{rp}(\omega,\mathbf{m})=\ln A^{obs}_{rp}(\omega)-\ln A_{rp}(\omega,\mathbf{m})\)</span> is the frequency-dependent amplitude anomaly measurements, and</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[W_{Q_{rp}}(\omega)=\frac{W_{rp}(\omega)}{\sigma_{Q_{rp}}^2(\omega)\int\,W_{rp}(\omega)d\omega}\]</div>
+</div>
+<p>Both <span class="math notranslate nohighlight">\(\phi_P\)</span> and <span class="math notranslate nohighlight">\(\phi_Q\)</span> are dimensionaless numbers, and the adjoint sources <span class="math notranslate nohighlight">\(f^\dagger_P(t)\)</span> and <span class="math notranslate nohighlight">\(f^\dagger_Q(t)\)</span>  have the units of <span class="math notranslate nohighlight">\(1/[\text{syn} \cdot \text{time}]\)</span>.</p>
+</li>
+</ul>
+</section>
+<section id="more-notes">
+<h2>More Notes<a class="headerlink" href="#more-notes" title="Link to this heading">¶</a></h2>
+<p>It is also possible to weigh windowed measurements of different categories if weighting is set in <code class="docutils literal notranslate"><span class="pre">ma_weighting</span></code> module (<code class="docutils literal notranslate"><span class="pre">DO_WEIGHTING</span></code>):</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\Phi = \sum_\alpha \, W_\alpha \, \sum_i \phi_{\alpha,i}\]</div>
+</div>
+<p>For instance, weights can be given to windows in <code class="docutils literal notranslate"><span class="pre">P_SV/SH/Rayleigh/Love</span></code> - <code class="docutils literal notranslate"><span class="pre">Z/R/T</span></code>, 6 different categories of measurements separately. They are only used to change the traveltime adjoint sources (and corresponding <span class="math notranslate nohighlight">\(\phi\)</span> values) at this
+point.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hint</p>
+<p>How about weighting related to the noise-level of the data trace itself?</p>
+</div>
+<section id="time-domain-taper">
+<h3>Time-domain taper<a class="headerlink" href="#time-domain-taper" title="Link to this heading">¶</a></h3>
+<p>Time domain tapers are first applied to windowed data and synthetics (no matter what other options are)</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[w(t) = 1- \cos^a (2 \pi t/T), \quad 0\le t \le T\]</div>
+</div>
+<p>where <span class="math notranslate nohighlight">\(a\)</span> is an even integer (i.e., <span class="math notranslate nohighlight">\(a=10\)</span>) or a Welch window</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[w(t) = 1-\frac{(t-T/2)^2}{(T/2)^2}\]</div>
+</div>
+</section>
+<section id="reonstructed-synthetics">
+<h3>Reonstructed synthetics<a class="headerlink" href="#reonstructed-synthetics" title="Link to this heading">¶</a></h3>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\tilde{s}(\omega)=s(\omega) e^{\Delta \ln A(\omega)- i \omega \Delta\tau(\omega)}\]</div>
+</div>
+<p>with the FFT convention in D&amp;T</p>
+</section>
+<section id="post-processing-of-adjoint-sources">
+<h3>Post-processing of adjoint sources<a class="headerlink" href="#post-processing-of-adjoint-sources" title="Link to this heading">¶</a></h3>
+<p>Note since data and synthetics have actually been pre-filtered, therefore the adjoint source that satisfies</p>
+<div class="math-wrapper docutils container">
+<div class="math notranslate nohighlight">
+\[\delta \phi = \int f^\dagger (t) s^f(t) dt = \frac{1}{2\pi} \int f^\dagger(\omega) B^*(\omega)s^*(\omega)\,d\omega
+=\int F^{-1}[f^\dagger(\omega)B^*(\omega)](t) s(t)\,dt\]</div>
+</div>
+<p>i.e., the adjoint source also needs to be filtered by the same band-pass filter to produce the exact Frechet
+derivatives.</p>
+</section>
+<section id="do-ray-density-source">
+<h3><code class="docutils literal notranslate"><span class="pre">DO_RAY_DENSITY_SOURCE</span></code><a class="headerlink" href="#do-ray-density-source" title="Link to this heading">¶</a></h3>
+<p>Both <code class="docutils literal notranslate"><span class="pre">sigma_tau</span></code> and <code class="docutils literal notranslate"><span class="pre">sigma_dlnA</span></code>, as well as measurements <code class="docutils literal notranslate"><span class="pre">Delta_dtau/DlnA</span></code> are set to be 1,
+and carried all the way to the adjoint source <code class="docutils literal notranslate"><span class="pre">tr/amp_adj_src(:)</span></code>. <code class="docutils literal notranslate"><span class="pre">DO_RAY_DENSITY_SOURCE</span></code> automatically
+sets <code class="docutils literal notranslate"><span class="pre">Error_type=0</span></code>. It provides a good indication of the volumetric coverage of the model domain by the given measurement sets.</p>
+</section>
+<section id="mtm">
+<h3>MTM<a class="headerlink" href="#mtm" title="Link to this heading">¶</a></h3>
+<p><code class="docutils literal notranslate"><span class="pre">dtau_mtm(:)</span></code> starts from <span class="math notranslate nohighlight">\(i &gt; 1\)</span>, i.e., ignore the time shift at very long periods, and equivalently, the first point of <code class="docutils literal notranslate"><span class="pre">err_dt(1)</span> <span class="pre">=</span> <span class="pre">LARGE</span></code> so that it does not contribute to adjoint sources and chi values.</p>
+</section>
+<section id="questions">
+<h3>Questions<a class="headerlink" href="#questions" title="Link to this heading">¶</a></h3>
+<p>Should we weigh data by their noise level (before the first arrival)?</p>
+</section>
+</section>
+<section id="miscellaneous">
+<h2>Miscellaneous<a class="headerlink" href="#miscellaneous" title="Link to this heading">¶</a></h2>
+<section id="bug-reports-and-suggestions-for-improvements">
+<h3>Bug reports and suggestions for improvements<a class="headerlink" href="#bug-reports-and-suggestions-for-improvements" title="Link to this heading">¶</a></h3>
+<p>To report bugs or suggest improvements to the code, please send an email to the CIG Computational Seismology Mailing List (cig-seismo&#64;geodynamics.org) or Carl Tape (carltape&#64;fas.harvard.edu), and/or use our online bug tracking system Roundup (www.geodynamics.org/roundup).</p>
+</section>
+</section>
+<section id="notes-and-acknowledgments">
+<h2>Notes and Acknowledgments<a class="headerlink" href="#notes-and-acknowledgments" title="Link to this heading">¶</a></h2>
+<p>This software package initiated as a effort of Jeroen Tromp’s research group at Caltech starting in 2006.
+The main developers of the MEAS-ADJ source code are Qinya Liu, Carl Tape, and Ying Zhou.
+The multitaper measurement capability originated from codes used by Ying Zhou :cite:p:<code class="docutils literal notranslate"><span class="pre">YZhou2004,YZhou2005</span></code>.
+The multitaper adjoint sources were implemented by Carl Tape Appendix C :cite:p:<code class="docutils literal notranslate"><span class="pre">Tape2009phd</span></code>.
+The organizational structure of the package was made by Qinya Liu, with adaptations by Carl Tape.
+The following individuals have also contributed to the development of the source code or related scripts: Vala \vala, Min Chen.
+The following individuals contributed to this manual: Carl Tape.</p>
+<p>The <strong>measure_adj</strong> code makes use of filtering and enveloping algorithms that are part of SAC (Seismic Analysis Code, Lawerence Livermore National Laboratory) provided for free to IRIS members.  We thank Brian Savage for adding interfaces to these algorithms in recent SAC distributions.</p>
+<p>We acknowledge support by the National Science Foundation under grant EAR-0711177.</p>
+<section id="license">
+<h3>License<a class="headerlink" href="#license" title="Link to this heading">¶</a></h3>
+<p>(See FLEXWIN manual for possible options.)</p>
+</section>
+</section>
+<section id="gallery">
+<h2>Gallery<a class="headerlink" href="#gallery" title="Link to this heading">¶</a></h2>
+<figure class="align-default" id="noadj">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_win.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_win.png" />
+<figcaption>
+<p><span class="caption-text">Test case seismograms with <code class="docutils literal notranslate"><span class="pre">COMPUTE_ADJOINT_SOURCE</span> <span class="pre">=</span> <span class="pre">.false.</span></code>.  Plot shows a three-component seismogram: Z = vertical, R = radial, T = transverse.  Black is the observed records, red is the synthetics, and blue is the reconstructed synthetics, made by applying the <span class="math notranslate nohighlight">\(\Delta T\)</span> and <span class="math notranslate nohighlight">\(\Delta \ln A\)</span> measurements within each window to the synthetics.  No adjoint sources are plotted.</span><a class="headerlink" href="#noadj" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker01">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker01_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker01_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources constructed from the data alone <code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">1</span></code>, <span class="math notranslate nohighlight">\(-d(t)/\|d(t)\|^2\)</span></span><a class="headerlink" href="#iker01" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker02">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker02_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker02_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a waveform difference measurement <code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">2</span></code>, <span class="math notranslate nohighlight">\(\mathbf{s} - \mathbf{d}\)</span></span><a class="headerlink" href="#iker02" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker03">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker03_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker03_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right:  Adjoint sources for a sensitivity kernel based on a cross-correlation traveltime difference, <span class="math notranslate nohighlight">\(\Delta T\)</span> (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">3</span></code>).</span><a class="headerlink" href="#iker03" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker04">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker04_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker04_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a sensitivity kernel based on an amplitude difference, <span class="math notranslate nohighlight">\(\Delta \ln A\)</span> (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">4</span></code>).</span><a class="headerlink" href="#iker04" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker05">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker05_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker05_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a cross-correlation traveltime difference,  <span class="math notranslate nohighlight">\(\Delta T\)</span> (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">5</span></code>).</span><a class="headerlink" href="#iker05" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker06">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker06_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker06_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for an amplitude difference, <span class="math notranslate nohighlight">\(\Delta \ln A\)</span> (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">6</span></code>).</span><a class="headerlink" href="#iker06" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker07">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker07_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker07_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a multitaper traveltime difference (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">7</span></code>).</span><a class="headerlink" href="#iker07" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+<figure class="align-default" id="iker08">
+<img alt="../../_images/9818433_T006_T030_MPM_CI_m16_iker08_win_adj.png" src="../../_images/9818433_T006_T030_MPM_CI_m16_iker08_win_adj.png" />
+<figcaption>
+<p><span class="caption-text">Left: Data (black), synthetics (red), and measurement windows.
+Right: Adjoint sources for a multitaper amplitude difference (<code class="docutils literal notranslate"><span class="pre">imeas</span> <span class="pre">=</span> <span class="pre">8</span></code>).</span><a class="headerlink" href="#iker08" title="Link to this image">¶</a></p>
+</figcaption>
+</figure>
+</section>
+<section id="reference">
+<h2>Reference<a class="headerlink" href="#reference" title="Link to this heading">¶</a></h2>
+<div class="docutils container" id="id7">
+<div role="list" class="citation-list">
+<div class="citation" id="id17" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>1<span class="fn-bracket">]</span></span>
+<p>Vadim Monteiller, Stephen Beller, Bastien Plazolles, and Sébastien Chevrot. On the validity of the planar wave approximation to compute synthetic seismograms of teleseismic body waves in a 3-d regional model. <em>Geophysical Journal International</em>, 224(3):2060–2076, 2021.</p>
+</div>
+<div class="citation" id="id11" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span>2<span class="fn-bracket">]</span></span>
+<span class="backrefs">(<a role="doc-backlink" href="#id1">1</a>,<a role="doc-backlink" href="#id6">2</a>)</span>
+<p>J. Tromp, C. H. Tape, and Q. Liu. Seismic tomography, adjoint methods, time reversal and banana-doughnut kernels. <em>Geophys. J. Int.</em>, 160:195–216, 2005. URL: <a class="reference external" href="http://scholar.google.com/scholar?hl=en\&amp;btnG=Search\&amp;q=intitle:Seismic+tomography,+adjoint+methods,+time+reversal+and+banana-doughnut+kernels\#0">http://scholar.google.com/scholar?hl=en\&amp;btnG=Search\&amp;q=intitle:Seismic+tomography,+adjoint+methods,+time+reversal+and+banana-doughnut+kernels\#0</a>.</p>
+</div>
+<div class="citation" id="id15" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">3</a><span class="fn-bracket">]</span></span>
+<p>Q. Liu and J. Tromp. Finite-frequency kernels based on adjoint methods. <em>Bull. Seism. Soc. Am.</em>, 96(6):2283–2397, 2006. URL: <a class="reference external" href="http://www.bssaonline.org/cgi/content/abstract/94/1/187">http://www.bssaonline.org/cgi/content/abstract/94/1/187</a>.</p>
+</div>
+<div class="citation" id="id10" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id1">4</a><span class="fn-bracket">]</span></span>
+<p>C. H. Tape, Q. Liu, and J. Tromp. Finite-frequency tomography using adjoint methods - Methodology and examples using membrane surface waves. <em>Geophys. J. Int.</em>, 168:1105–29, 2007.</p>
+</div>
+<div class="citation" id="id14" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id2">5</a><span class="fn-bracket">]</span></span>
+<p>C. H. Tape, Q. Liu, Alessia Maggi, and J. Tromp. Adjoint tomography of the southern California crust. <em>Science</em>, 325(5943):988–992, August 2009. URL: <a class="reference external" href="http://www.ncbi.nlm.nih.gov/pubmed/19696349">http://www.ncbi.nlm.nih.gov/pubmed/19696349</a>, <a class="reference external" href="https://doi.org/10.1126/science.1175298">doi:10.1126/science.1175298</a>.</p>
+</div>
+<div class="citation" id="id13" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id3">6</a><span class="fn-bracket">]</span></span>
+<p>A. Maggi, C. H. Tape, M. Chen, D. Chao, and J. Tromp. An automated time-window selection algorithm for seismic tomography. <em>Geophys. J. Int.</em>, 178:257–281, July 2009. URL: <a class="reference external" href="http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04099.x">http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04099.x</a>, <a class="reference external" href="https://doi.org/10.1111/j.1365-246X.2009.04099.x">doi:10.1111/j.1365-246X.2009.04099.x</a>.</p>
+</div>
+<div class="citation" id="id9" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id4">7</a><span class="fn-bracket">]</span></span>
+<p>C. H. Tape. <em>Seismic Tomography of Southern California Using Adjoint Methods</em>. PhD thesis, Caltech, 2009. URL: <a class="reference external" href="http://thesis.library.caltech.edu/1656/">http://thesis.library.caltech.edu/1656/</a>.</p>
+</div>
+<div class="citation" id="id12" role="doc-biblioentry">
+<span class="label"><span class="fn-bracket">[</span><a role="doc-backlink" href="#id5">8</a><span class="fn-bracket">]</span></span>
+<p>C. H. Tape, Q. Liu, A. Maggi, and J. Tromp. Seismic tomography of the southern California crust based on spectral-element and adjoint methods. <em>Geophys. J. Int.</em>, 180:433–462, 2010. URL: <a class="reference external" href="http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04429.x">http://blackwell-synergy.com/doi/abs/10.1111/j.1365-246X.2009.04429.x</a>, <a class="reference external" href="https://doi.org/10.1111/j.1365-246X.2009.04429.x">doi:10.1111/j.1365-246X.2009.04429.x</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="line_search.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">How to determine an optimal step length</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="addpert.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Add velocity perturbation</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Mijian Xu
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            <div class="last-updated">
+              Last updated on 06/03/2026</div>
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#getting-started">Getting started</a><ul>
+<li><a class="reference internal" href="#system-requirements">System requirements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#obtaining-the-code">Obtaining the code</a></li>
+<li><a class="reference internal" href="#compilation">Compilation</a><ul>
+<li><a class="reference internal" href="#running-the-test-case">Running the test case</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#running-meas-adj">Running MEAS–ADJ</a><ul>
+<li><a class="reference internal" href="#input-file-1-measurement-windows">Input file 1: <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.WINDOWS</span></code></a></li>
+<li><a class="reference internal" href="#input-file-2-measurement-par">Input file 2: <code class="docutils literal notranslate"><span class="pre">MEASUREMENT.PAR</span></code></a></li>
+<li><a class="reference internal" href="#multitaper-parameters">Multitaper parameters</a></li>
+<li><a class="reference internal" href="#output-files">Output files</a></li>
+<li><a class="reference internal" href="#scripts">Scripts</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#measurement-options">Measurement options</a></li>
+<li><a class="reference internal" href="#more-notes">More Notes</a><ul>
+<li><a class="reference internal" href="#time-domain-taper">Time-domain taper</a></li>
+<li><a class="reference internal" href="#reonstructed-synthetics">Reonstructed synthetics</a></li>
+<li><a class="reference internal" href="#post-processing-of-adjoint-sources">Post-processing of adjoint sources</a></li>
+<li><a class="reference internal" href="#do-ray-density-source"><code class="docutils literal notranslate"><span class="pre">DO_RAY_DENSITY_SOURCE</span></code></a></li>
+<li><a class="reference internal" href="#mtm">MTM</a></li>
+<li><a class="reference internal" href="#questions">Questions</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#miscellaneous">Miscellaneous</a><ul>
+<li><a class="reference internal" href="#bug-reports-and-suggestions-for-improvements">Bug reports and suggestions for improvements</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#notes-and-acknowledgments">Notes and Acknowledgments</a><ul>
+<li><a class="reference internal" href="#license">License</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#gallery">Gallery</a></li>
+<li><a class="reference internal" href="#reference">Reference</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="/home/runner/micromamba/envs/docs/lib/python3.12/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/js/all.min.js?v=ec35c6c9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@4/tex-mml-chtml.js"></script>
+    </body>
+</html>

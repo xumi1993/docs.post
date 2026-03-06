@@ -1,0 +1,163 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "id": "c275116d",
+            "metadata": {},
+            "source": [
+                "# Python Basics - 05. Modules and Packages\n",
+                "\n",
+                "To avoid writing everything from scratch and to organize code into separate files, Python uses **Modules** and **Packages**. This notebook will show you how to import them and utilize Python's rich standard library."
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "metadata": {
+                "language": "markdown"
+            },
+            "source": [
+                "## Download Notebook\n",
+                "\n",
+                "{download}`Download this notebook <05_modules_and_packages.ipynb>`\n"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "c8558e90",
+            "metadata": {},
+            "source": [
+                "## 1. Importing Modules\n",
+                "\n",
+                "A module can simply be another Python file containing functions, classes, or variables. You load a module's contents into your current file using the `import` statement."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "392bba4d",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "import math\n",
+                "\n",
+                "print(f\"Value of Pi: {math.pi}\")\n",
+                "print(f\"Square root of 16: {math.sqrt(16)}\")\n",
+                "\n",
+                "# You can also give the module an alias, which is very common with big libraries (e.g. import pandas as pd)\n",
+                "import datetime as dt\n",
+                "\n",
+                "current_date = dt.date.today()\n",
+                "print(f\"Today's Date: {current_date}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "b1ecf20b",
+            "metadata": {},
+            "source": [
+                "## 2. Importing Specific Items (from ... import ...)\n",
+                "\n",
+                "If you only need a specific function or variable from a module, you can import it directly. This removes the need to prefix the item with the module name."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "bf28b781",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "from random import randint, choice\n",
+                "\n",
+                "# Notice we don't need 'random.randint()', just 'randint()'\n",
+                "print(f\"Random integer between 1 and 10: {randint(1, 10)}\")\n",
+                "print(f\"Random choice from a list: {choice(['Apple', 'Banana', 'Cherry'])}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "eb1bd527",
+            "metadata": {},
+            "source": [
+                "## 3. The Python Standard Library Overview\n",
+                "\n",
+                "Python comes with \"batteries included\", meaning it has a huge standard library covering network access, system interactions, text processing, and more.\n",
+                "\n",
+                "- `os`: Interfaces with the underlying operating system\n",
+                "- `sys`: Accesses system-specific parameters and functions\n",
+                "- `json`: A lightweight data interchange format popular on the web"
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "b6e98084",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "import os\n",
+                "import sys\n",
+                "import json\n",
+                "\n",
+                "print(f\"Current Working Directory (CWD): {os.getcwd()}\")\n",
+                "print(f\"Current Python Version: {sys.version.split(' ')[0]}\")\n",
+                "\n",
+                "# Converting a Python Dictionary into a JSON formatted string\n",
+                "python_dict = {\"name\": \"Alice\", \"role\": \"Developer\", \"skills\": [\"Python\", \"SQL\"]}\n",
+                "json_string = json.dumps(python_dict, indent=4)  # indent=4 makes it readable\n",
+                "\n",
+                "print(\"\\nSerialized JSON:\")\n",
+                "print(json_string)"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "a69c6693",
+            "metadata": {},
+            "source": [
+                "## 4. Writing and Importing Your Own Module\n",
+                "\n",
+                "The core idea is simple:\n",
+                "1. Define functions in one file (for example, `my_math.py`).\n",
+                "2. Import and use them in another file (for example, `main.py`).\n",
+                "\n",
+                "This is the most common module workflow in Python projects."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "6919e121",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "# Step 1: Create module file: my_math.py\n",
+                "from pathlib import Path\n",
+                "\n",
+                "Path(\"my_math.py\").write_text(\n",
+                "    \"def add(a, b):\\n\"\n",
+                "    \"    return a + b\\n\\n\"\n",
+                "    \"def multiply(a, b):\\n\"\n",
+                "    \"    return a * b\\n\"\n",
+                ")\n",
+                "\n",
+                "# Step 2: Create caller file: main.py\n",
+                "Path(\"main.py\").write_text(\n",
+                "    \"from my_math import add, multiply\\n\\n\"\n",
+                "    \"print(add(2, 3))\\n\"\n",
+                "    \"print(multiply(4, 5))\\n\"\n",
+                ")\n",
+                "\n",
+                "# Step 3: Run main.py to use functions from my_math.py\n",
+                "exec(Path(\"main.py\").read_text())"
+            ]
+        }
+    ],
+    "metadata": {
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 5
+}
