@@ -7,5 +7,6 @@
 
 environment/index
 python/index
+numpy/index
 ```
 
