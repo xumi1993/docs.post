@@ -7,3 +7,7 @@ source/seismo/matplotlib/
 
 __pycache__/
 source/prog/python/*.py
+
+source/prog/numpy/*.npy
+source/prog/numpy/*.npz
+source/prog/numpy/*.txt
