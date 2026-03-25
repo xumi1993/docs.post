@@ -1,0 +1,186 @@
+{
+ "cells": [
+  {
+   "cell_type": "markdown",
+   "id": "be8d1380",
+   "metadata": {},
+   "source": [
+    "# NumPy Tutorial 04: Vectorization, UFuncs, and Broadcasting"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "ba2ca4f0",
+   "metadata": {},
+   "source": [
+    "## Download Notebook\n",
+    "\n",
+    "{download}`Download this notebook <04_vectorization_and_broadcasting.ipynb>`"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "5b333e8f",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "import numpy as np\n",
+    "from time import perf_counter"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "fb3cb66b",
+   "metadata": {},
+   "source": [
+    "## 1. UFuncs are the core engine\n",
+    "\n",
+    "Universal functions (ufuncs) like `np.exp`, `np.log`, `np.sqrt`, `np.sin` operate element-wise and are optimized in C."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f3e498bd",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = np.linspace(1, 5, 5)\n",
+    "print('x:', x)\n",
+    "print('exp(x):', np.round(np.exp(x), 3))\n",
+    "print('sqrt(x):', np.round(np.sqrt(x), 3))\n",
+    "print('log(x):', np.round(np.log(x), 3))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "8f93b8b4",
+   "metadata": {},
+   "source": [
+    "## 2. Conditional vectorized logic\n",
+    "\n",
+    "Use `np.where` for branch-like operations on arrays."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "3e09fe12",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "x = np.array([-3, -1, 0, 2, 4])\n",
+    "y = np.where(x >= 0, x**2, -x)\n",
+    "print('x:', x)\n",
+    "print('piecewise y:', y)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "34275be0",
+   "metadata": {},
+   "source": [
+    "## 3. Broadcasting rules\n",
+    "\n",
+    "Two dimensions are compatible when they are equal or one of them is 1 (compared from right to left)."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "f682fb02",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "A = np.arange(12).reshape(3, 4)\n",
+    "b = np.array([10, 20, 30, 40])\n",
+    "\n",
+    "print('A shape:', A.shape)\n",
+    "print('b shape:', b.shape)\n",
+    "print('A + b:\\n', A + b)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "cc3d3c3a",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "A = np.arange(12).reshape(3, 4)\n",
+    "c = np.array([[1], [2], [3]])\n",
+    "\n",
+    "print('A shape:', A.shape)\n",
+    "print('c shape:', c.shape)\n",
+    "print('A + c:\\n', A + c)"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "4cc65d6d",
+   "metadata": {},
+   "source": [
+    "## 4. Broadcasting pitfall and fix\n",
+    "\n",
+    "Shape mismatch raises an error. We can often fix it by reshaping explicitly."
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "de2f6c29",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "A = np.arange(12).reshape(3, 4)\n",
+    "v = np.array([1, 2, 3])\n",
+    "\n",
+    "try:\n",
+    "    A + v\n",
+    "except ValueError as e:\n",
+    "    print('Broadcast error:', e)\n",
+    "\n",
+    "print('Fix with reshape to column vector:\\n', A + v.reshape(3, 1))"
+   ]
+  },
+  {
+   "cell_type": "markdown",
+   "id": "3911343b",
+   "metadata": {},
+   "source": [
+    "## 5. Vectorization benchmark (loop vs ufunc)"
+   ]
+  },
+  {
+   "cell_type": "code",
+   "execution_count": null,
+   "id": "4d6a6d33",
+   "metadata": {},
+   "outputs": [],
+   "source": [
+    "n = 800_000\n",
+    "x = np.linspace(-3, 3, n)\n",
+    "\n",
+    "t0 = perf_counter()\n",
+    "y_loop = np.array([np.sin(v) + np.cos(v**2) for v in x])\n",
+    "t1 = perf_counter()\n",
+    "\n",
+    "t2 = perf_counter()\n",
+    "y_vec = np.sin(x) + np.cos(x**2)\n",
+    "t3 = perf_counter()\n",
+    "\n",
+    "print(f'Loop: {t1 - t0:.4f}s')\n",
+    "print(f'Vectorized: {t3 - t2:.4f}s')\n",
+    "print('Close?', np.allclose(y_loop, y_vec))"
+   ]
+  }
+ ],
+ "metadata": {
+  "language_info": {
+   "name": "python"
+  }
+ },
+ "nbformat": 4,
+ "nbformat_minor": 5
+}

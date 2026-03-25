@@ -1,0 +1,752 @@
+<!doctype html>
+<html class="no-js" lang="en" data-content_root="../../">
+  <head><meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="color-scheme" content="light dark"><meta name="viewport" content="width=device-width, initial-scale=1" />
+<link rel="index" title="Index" href="../../genindex.html"><link rel="search" title="Search" href="../../search.html"><link rel="next" title="Python Environment: Miniforge" href="mambaforge.html"><link rel="prev" title="Windows Subsystem for Linux (WSL)" href="wsl.html">
+
+    <!-- Generated with Sphinx 9.1.0 and Furo 2025.12.19 -->
+        <title>Linux Basics - Oh My Memo</title>
+      <link rel="stylesheet" type="text/css" href="../../_static/pygments.css?v=d111a655" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo.css?v=7bdb33bb" />
+    <link rel="stylesheet" type="text/css" href="../../_static/copybutton.css?v=76b2166b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/mystnb.11b39860a7a0cbfd473a3ad8a317855267ff0bd372690045ca344a6b62be495e.css" />
+    <link rel="stylesheet" type="text/css" href="/home/runner/micromamba/envs/docs/lib/python3.12/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/css/all.min.css?v=53359634" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery.css?v=d2d258e8" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-binder.css?v=f4aeca0c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-dataframe.css?v=2082cf3c" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sg_gallery-rendered-html.css?v=1277b6f3" />
+    <link rel="stylesheet" type="text/css" href="../../_static/sphinx-design.min.css?v=95c83b7e" />
+    <link rel="stylesheet" type="text/css" href="../../_static/styles/furo-extensions.css?v=8dab3a3b" />
+    <link rel="stylesheet" type="text/css" href="../../_static/custom.css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/gallery.css?v=781a0e83" />
+    
+    
+
+
+<style>
+  body {
+    --color-code-background: #f2f2f2;
+  --color-code-foreground: #1e1e1e;
+  
+  }
+  @media not print {
+    body[data-theme="dark"] {
+      --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+    }
+    @media (prefers-color-scheme: dark) {
+      body:not([data-theme="light"]) {
+        --color-code-background: #202020;
+  --color-code-foreground: #d0d0d0;
+  
+      }
+    }
+  }
+</style></head>
+  <body>
+    
+    <script>
+      document.body.dataset.theme = localStorage.getItem("theme") || "auto";
+    </script>
+    
+
+<svg xmlns="http://www.w3.org/2000/svg" style="display: none;">
+  <symbol id="svg-toc" viewBox="0 0 24 24">
+    <title>Contents</title>
+    <svg stroke="currentColor" fill="currentColor" stroke-width="0" viewBox="0 0 1024 1024">
+      <path d="M408 442h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8zm-8 204c0 4.4 3.6 8 8 8h480c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8H408c-4.4 0-8 3.6-8 8v56zm504-486H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zm0 632H120c-4.4 0-8 3.6-8 8v56c0 4.4 3.6 8 8 8h784c4.4 0 8-3.6 8-8v-56c0-4.4-3.6-8-8-8zM115.4 518.9L271.7 642c5.8 4.6 14.4.5 14.4-6.9V388.9c0-7.4-8.5-11.5-14.4-6.9L115.4 505.1a8.74 8.74 0 0 0 0 13.8z"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-menu" viewBox="0 0 24 24">
+    <title>Menu</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-menu">
+      <line x1="3" y1="12" x2="21" y2="12"></line>
+      <line x1="3" y1="6" x2="21" y2="6"></line>
+      <line x1="3" y1="18" x2="21" y2="18"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-arrow-right" viewBox="0 0 24 24">
+    <title>Expand</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather-chevron-right">
+      <polyline points="9 18 15 12 9 6"></polyline>
+    </svg>
+  </symbol>
+  <symbol id="svg-sun" viewBox="0 0 24 24">
+    <title>Light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="feather-sun">
+      <circle cx="12" cy="12" r="5"></circle>
+      <line x1="12" y1="1" x2="12" y2="3"></line>
+      <line x1="12" y1="21" x2="12" y2="23"></line>
+      <line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line>
+      <line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line>
+      <line x1="1" y1="12" x2="3" y2="12"></line>
+      <line x1="21" y1="12" x2="23" y2="12"></line>
+      <line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line>
+      <line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon" viewBox="0 0 24 24">
+    <title>Dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-moon">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M12 3c.132 0 .263 0 .393 0a7.5 7.5 0 0 0 7.92 12.446a9 9 0 1 1 -8.313 -12.454z" />
+    </svg>
+  </symbol>
+  <symbol id="svg-sun-with-moon" viewBox="0 0 24 24">
+    <title>Auto light/dark, in light mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path style="opacity: 50%" d="M 5.411 14.504 C 5.471 14.504 5.532 14.504 5.591 14.504 C 3.639 16.319 4.383 19.569 6.931 20.352 C 7.693 20.586 8.512 20.551 9.25 20.252 C 8.023 23.207 4.056 23.725 2.11 21.184 C 0.166 18.642 1.702 14.949 4.874 14.536 C 5.051 14.512 5.231 14.5 5.411 14.5 L 5.411 14.504 Z"/>
+      <line x1="14.5" y1="3.25" x2="14.5" y2="1.25"/>
+      <line x1="14.5" y1="15.85" x2="14.5" y2="17.85"/>
+      <line x1="10.044" y1="5.094" x2="8.63" y2="3.68"/>
+      <line x1="19" y1="14.05" x2="20.414" y2="15.464"/>
+      <line x1="8.2" y1="9.55" x2="6.2" y2="9.55"/>
+      <line x1="20.8" y1="9.55" x2="22.8" y2="9.55"/>
+      <line x1="10.044" y1="14.006" x2="8.63" y2="15.42"/>
+      <line x1="19" y1="5.05" x2="20.414" y2="3.636"/>
+      <circle cx="14.5" cy="9.55" r="3.6"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-moon-with-sun" viewBox="0 0 24 24">
+    <title>Auto light/dark, in dark mode</title>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round"
+      class="icon-custom-derived-from-feather-sun-and-tabler-moon">
+      <path d="M 8.282 7.007 C 8.385 7.007 8.494 7.007 8.595 7.007 C 5.18 10.184 6.481 15.869 10.942 17.24 C 12.275 17.648 13.706 17.589 15 17.066 C 12.851 22.236 5.91 23.143 2.505 18.696 C -0.897 14.249 1.791 7.786 7.342 7.063 C 7.652 7.021 7.965 7 8.282 7 L 8.282 7.007 Z"/>
+      <line style="opacity: 50%" x1="18" y1="3.705" x2="18" y2="2.5"/>
+      <line style="opacity: 50%" x1="18" y1="11.295" x2="18" y2="12.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="4.816" x2="14.464" y2="3.964"/>
+      <line style="opacity: 50%" x1="20.711" y1="10.212" x2="21.563" y2="11.063"/>
+      <line style="opacity: 50%" x1="14.205" y1="7.5" x2="13.001" y2="7.5"/>
+      <line style="opacity: 50%" x1="21.795" y1="7.5" x2="23" y2="7.5"/>
+      <line style="opacity: 50%" x1="15.316" y1="10.184" x2="14.464" y2="11.036"/>
+      <line style="opacity: 50%" x1="20.711" y1="4.789" x2="21.563" y2="3.937"/>
+      <circle style="opacity: 50%" cx="18" cy="7.5" r="2.169"/>
+    </svg>
+  </symbol>
+  <symbol id="svg-pencil" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-pencil-code">
+      <path d="M4 20h4l10.5 -10.5a2.828 2.828 0 1 0 -4 -4l-10.5 10.5v4" />
+      <path d="M13.5 6.5l4 4" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+  <symbol id="svg-eye" viewBox="0 0 24 24">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      stroke-width="1" stroke-linecap="round" stroke-linejoin="round" class="icon-tabler-eye-code">
+      <path stroke="none" d="M0 0h24v24H0z" fill="none" />
+      <path d="M10 12a2 2 0 1 0 4 0a2 2 0 0 0 -4 0" />
+      <path
+        d="M11.11 17.958c-3.209 -.307 -5.91 -2.293 -8.11 -5.958c2.4 -4 5.4 -6 9 -6c3.6 0 6.6 2 9 6c-.21 .352 -.427 .688 -.647 1.008" />
+      <path d="M20 21l2 -2l-2 -2" />
+      <path d="M17 17l-2 2l2 2" />
+    </svg>
+  </symbol>
+</svg>
+
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle site navigation sidebar">
+<input type="checkbox" class="sidebar-toggle" name="__toc" id="__toc" aria-label="Toggle table of contents sidebar">
+<label class="overlay sidebar-overlay" for="__navigation"></label>
+<label class="overlay toc-overlay" for="__toc"></label>
+
+<a class="skip-to-content muted-link" href="#furo-main-content">Skip to content</a>
+
+
+
+<div class="page">
+  <header class="mobile-header">
+    <div class="header-left">
+      <label class="nav-overlay-icon" for="__navigation">
+        <span class="icon"><svg><use href="#svg-menu"></use></svg></span>
+      </label>
+    </div>
+    <div class="header-center">
+      <a href="../../index.html"><div class="brand">Oh My Memo</div></a>
+    </div>
+    <div class="header-right">
+      <div class="theme-toggle-container theme-toggle-header">
+        <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+          <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+          <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+          <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+          <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+        </button>
+      </div>
+      <label class="toc-overlay-icon toc-header-icon" for="__toc">
+        <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+      </label>
+    </div>
+  </header>
+  <aside class="sidebar-drawer">
+    <div class="sidebar-container">
+      
+      <div class="sidebar-sticky"><a class="sidebar-brand" href="../../index.html">
+  
+  <span class="sidebar-brand-text">Oh My Memo</span>
+  
+</a><form class="sidebar-search-container" method="get" action="../../search.html" role="search">
+  <input class="sidebar-search" placeholder="Search" name="q" aria-label="Search">
+  <input type="hidden" name="check_keywords" value="yes">
+  <input type="hidden" name="area" value="default">
+</form>
+<div id="searchbox"></div><div class="sidebar-scroll"><div class="sidebar-tree">
+  <ul class="current">
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../links/index.html">Code links</a><input aria-label="Toggle navigation of Code links" class="toctree-checkbox" id="toctree-checkbox-1" name="toctree-checkbox-1" role="switch" type="checkbox"/><label for="toctree-checkbox-1"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2"><a class="reference internal" href="../../links/rf.html">Receiver functions</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../../links/gmt.html">GMT</a></li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../links/model.html">Earth models</a><input aria-label="Toggle navigation of Earth models" class="toctree-checkbox" id="toctree-checkbox-2" name="toctree-checkbox-2" role="switch" type="checkbox"/><label for="toctree-checkbox-2"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../links/ak135.html">AK135</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../links/iasp91.html">IASP91</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../links/prem.html">PREM</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 has-children"><a class="reference internal" href="../../seismo/index.html">Seismological tools</a><input aria-label="Toggle navigation of Seismological tools" class="toctree-checkbox" id="toctree-checkbox-3" name="toctree-checkbox-3" role="switch" type="checkbox"/><label for="toctree-checkbox-3"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../seismo/specfem3d/index.html">Specfem3D and Full Waveform Inversion</a><input aria-label="Toggle navigation of Specfem3D and Full Waveform Inversion" class="toctree-checkbox" id="toctree-checkbox-4" name="toctree-checkbox-4" role="switch" type="checkbox"/><label for="toctree-checkbox-4"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/specfem3d/mesh.html">Rules of meshes in Specfem3D</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/specfem3d/rf_fwd.html">Receiver Function Forward simulation with Specfem3D_FWATR</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/specfem3d/addpert.html">Add velocity perturbation</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/specfem3d/measure_adj.html">measure_adj: A software package for making measurements and computing adjoint sources for seismic tomography</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/specfem3d/line_search.html">How to determine an optimal step length</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../../seismo/matplotlib/index.html">Matplotlib Gallery</a><input aria-label="Toggle navigation of Matplotlib Gallery" class="toctree-checkbox" id="toctree-checkbox-5" name="toctree-checkbox-5" role="switch" type="checkbox"/><label for="toctree-checkbox-5"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/matplotlib/chist.html">Colored histogram</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/matplotlib/align-rf.html">Receiver Functions order by back-azimuth</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../../seismo/matplotlib/evts_stack.html">2D bars for binned events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1 current has-children"><a class="reference internal" href="../index.html">Learning Program</a><input aria-label="Toggle navigation of Learning Program" checked="" class="toctree-checkbox" id="toctree-checkbox-6" name="toctree-checkbox-6" role="switch" type="checkbox"/><label for="toctree-checkbox-6"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l2 current has-children"><a class="reference internal" href="index.html">Setting Up Your Development Environment</a><input aria-label="Toggle navigation of Setting Up Your Development Environment" checked="" class="toctree-checkbox" id="toctree-checkbox-7" name="toctree-checkbox-7" role="switch" type="checkbox"/><label for="toctree-checkbox-7"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="vscode.html">Visual Studio Code (VSCode)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="wsl.html">Windows Subsystem for Linux (WSL)</a></li>
+<li class="toctree-l3 current current-page"><a class="current reference internal" href="#">Linux Basics</a></li>
+<li class="toctree-l3"><a class="reference internal" href="mambaforge.html">Python Environment: Miniforge</a></li>
+<li class="toctree-l3"><a class="reference internal" href="vim-intro.html">Vim Introduction Guide</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../python/index.html">Python Syntax Tutorial</a><input aria-label="Toggle navigation of Python Syntax Tutorial" class="toctree-checkbox" id="toctree-checkbox-8" name="toctree-checkbox-8" role="switch" type="checkbox"/><label for="toctree-checkbox-8"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../python/01_introduction.html">Python Basics - 01. Introduction &amp; Variables</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/02_control_flow.html">Python Basics - 02. Control Flow</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/03_data_structures.html">Python Basics - 03. Data Structures</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/04_functions.html">Python Basics - 04. Functions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/05_modules_and_packages.html">Python Basics - 05. Modules and Packages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/06_file_io.html">Python Basics - 06. File Input / Output</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/07_errors_and_exceptions.html">Python Basics - 07. Errors and Exceptions</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/08_classes_and_objects.html">Python Basics - 08. Object-Oriented Programming (OOP)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/09_comprehensions_and_generators.html">Python Basics - 09. Comprehensions, Iterators, and Generators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/10_strings_unpacking_and_slicing.html">Python Basics - 10. Strings, Slicing, and Unpacking</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/11_scope_closures_and_decorators.html">Python Basics - 11. Scope, Closures, and Decorators</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../python/12_advanced_oop.html">Python Basics - 12. Advanced OOP Essentials</a></li>
+</ul>
+</li>
+<li class="toctree-l2 has-children"><a class="reference internal" href="../numpy/index.html">NumPy Tutorial</a><input aria-label="Toggle navigation of NumPy Tutorial" class="toctree-checkbox" id="toctree-checkbox-9" name="toctree-checkbox-9" role="switch" type="checkbox"/><label for="toctree-checkbox-9"><span class="icon"><svg><use href="#svg-arrow-right"></use></svg></span></label><ul>
+<li class="toctree-l3"><a class="reference internal" href="../numpy/01_getting_started.html">NumPy Tutorial 01: Foundations and Performance</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../numpy/02_array_creation_and_attributes.html">NumPy Tutorial 02: Array Creation, Shape, and Memory Model</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../numpy/03_indexing_slicing_and_reshaping.html">NumPy Tutorial 03: Indexing, Masking, and Reshaping</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../numpy/04_vectorization_and_broadcasting.html">NumPy Tutorial 04: Vectorization, UFuncs, and Broadcasting</a></li>
+<li class="toctree-l3"><a class="reference internal" href="../numpy/05_statistics_linear_algebra_and_io.html">NumPy Tutorial 05: Statistics, Linear Algebra, and Data I/O</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Links</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://xumijian.me">Home page</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://github.com/xumi1993/docs-post">GitHub Repository</a></li>
+</ul>
+
+</div>
+</div>
+
+      </div>
+      
+    </div>
+  </aside>
+  <div class="main">
+    <div class="content">
+      <div class="article-container">
+        <a href="#" class="back-to-top muted-link">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <path d="M13 20h-2V8l-5.5 5.5-1.42-1.42L12 4.16l7.92 7.92-1.42 1.42L13 8v12z"></path>
+          </svg>
+          <span>Back to top</span>
+        </a>
+        <div class="content-icon-container">
+          <div class="view-this-page">
+  <a class="muted-link" href="../../_sources/prog/environment/linux-basics.md.txt" title="View this page">
+    <svg><use href="#svg-eye"></use></svg>
+    <span class="visually-hidden">View this page</span>
+  </a>
+</div>
+<div class="theme-toggle-container theme-toggle-content">
+            <button class="theme-toggle" aria-label="Toggle Light / Dark / Auto color theme">
+              <svg class="theme-icon-when-auto-light"><use href="#svg-sun-with-moon"></use></svg>
+              <svg class="theme-icon-when-auto-dark"><use href="#svg-moon-with-sun"></use></svg>
+              <svg class="theme-icon-when-dark"><use href="#svg-moon"></use></svg>
+              <svg class="theme-icon-when-light"><use href="#svg-sun"></use></svg>
+            </button>
+          </div>
+          <label class="toc-overlay-icon toc-content-icon" for="__toc">
+            <span class="icon"><svg><use href="#svg-toc"></use></svg></span>
+          </label>
+        </div>
+        <article role="main" id="furo-main-content">
+          <section id="linux-basics">
+<h1>Linux Basics<a class="headerlink" href="#linux-basics" title="Link to this heading">¶</a></h1>
+<section id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Link to this heading">¶</a></h2>
+<p>If you’re transitioning from Windows to Linux for coding and scientific computing, this guide focuses on the essential aspects you’ll need. Linux excels in these areas due to its powerful command-line tools, package management, and efficiency for handling large datasets and computations. We’ll cover the core concepts and commands that will help you get productive quickly.</p>
+</section>
+<section id="why-linux-for-coding-and-scientific-computing">
+<h2>Why Linux for Coding and Scientific Computing?<a class="headerlink" href="#why-linux-for-coding-and-scientific-computing" title="Link to this heading">¶</a></h2>
+<p>Linux provides:</p>
+<ul class="simple">
+<li><p><strong>Powerful Shell</strong>: Automate tasks, run scripts, and process data efficiently.</p></li>
+<li><p><strong>Package Managers</strong>: Easily install programming languages, libraries, and tools.</p></li>
+<li><p><strong>File System</strong>: Hierarchical structure ideal for organizing code and data.</p></li>
+<li><p><strong>Stability</strong>: Reliable for long-running computations and remote work.</p></li>
+</ul>
+</section>
+<section id="basic-linux-operating-logic">
+<h2>Basic Linux Operating Logic<a class="headerlink" href="#basic-linux-operating-logic" title="Link to this heading">¶</a></h2>
+<section id="kernel-and-user-space">
+<h3>Kernel and User Space<a class="headerlink" href="#kernel-and-user-space" title="Link to this heading">¶</a></h3>
+<ul class="simple">
+<li><p><strong>Kernel</strong>: Manages hardware and resources. As a coder, you interact with it indirectly through system calls.</p></li>
+<li><p><strong>User Space</strong>: Where your programs run. Includes the Shell for executing commands.</p></li>
+</ul>
+</section>
+<section id="shell-and-command-line">
+<h3>Shell and Command Line<a class="headerlink" href="#shell-and-command-line" title="Link to this heading">¶</a></h3>
+<p>The Shell (e.g., Bash) is your primary interface for coding:</p>
+<ul class="simple">
+<li><p>Run scripts, compilers, and analysis tools.</p></li>
+<li><p>Automate workflows with scripts.</p></li>
+<li><p>Connect to remote servers (e.g., HPC clusters) via SSH.</p></li>
+</ul>
+<p><strong>Example: Simple Shell Script to Count Files</strong></p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Count the number of files in the current directory</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Counting files in current directory...&quot;</span>
+<span class="nv">file_count</span><span class="o">=</span><span class="k">$(</span>ls<span class="w"> </span>-1<span class="w"> </span><span class="p">|</span><span class="w"> </span>wc<span class="w"> </span>-l<span class="k">)</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;There are </span><span class="nv">$file_count</span><span class="s2"> files.&quot;</span>
+</pre></div>
+</div>
+<p>Run it with: <code class="docutils literal notranslate"><span class="pre">sh</span> <span class="pre">./count_files.sh</span></code></p>
+</section>
+</section>
+<section id="file-management-for-coders">
+<h2>File Management for Coders<a class="headerlink" href="#file-management-for-coders" title="Link to this heading">¶</a></h2>
+<section id="directory-structure">
+<h3>Directory Structure<a class="headerlink" href="#directory-structure" title="Link to this heading">¶</a></h3>
+<p>Organize your projects logically:</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">/home/user</span></code>: <strong>Your workspace</strong> (store code, data, results).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/usr/bin</span></code>: System binaries (compilers, interpreters).</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">/tmp</span></code>: Temporary files for computations.</p></li>
+</ul>
+<p>Use absolute/relative paths consistently in scripts.</p>
+</section>
+<section id="file-permissions">
+<h3>File Permissions<a class="headerlink" href="#file-permissions" title="Link to this heading">¶</a></h3>
+<p>Critical for shared projects or servers:</p>
+<ul class="simple">
+<li><p>Set executable permissions on scripts: <code class="docutils literal notranslate"><span class="pre">chmod</span> <span class="pre">+x</span> <span class="pre">script.sh</span></code></p></li>
+<li><p>Understand ownership to avoid access issues with data files.</p></li>
+</ul>
+</section>
+<section id="superuser-access-with-sudo">
+<h3>Superuser Access with sudo<a class="headerlink" href="#superuser-access-with-sudo" title="Link to this heading">¶</a></h3>
+<p>In Linux, most users operate with limited permissions to prevent accidental system damage. However, system-level tasks like installing software or modifying system files require root (administrator) privileges. <code class="docutils literal notranslate"><span class="pre">sudo</span></code> (Superuser DO) allows you to run commands as root temporarily.</p>
+<p><strong>Why Important on Personal Computers:</strong></p>
+<ul class="simple">
+<li><p><strong>Security</strong>: Avoids logging in as root, reducing risk of mistakes that could break your system.</p></li>
+<li><p><strong>Convenience</strong>: Grants elevated access only when needed, without switching users.</p></li>
+<li><p><strong>Best Practice</strong>: Essential for package installation, system configuration, and hardware management in coding/scientific setups.</p></li>
+</ul>
+<p><strong>Basic Usage:</strong></p>
+<ul class="simple">
+<li><p>Prefix any command with <code class="docutils literal notranslate"><span class="pre">sudo</span></code>: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">update</span></code></p></li>
+<li><p>You’ll be prompted for your password (not root’s).</p></li>
+<li><p>Examples:</p>
+<ul>
+<li><p>Install packages: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">python3-dev</span></code></p></li>
+<li><p>Edit and write system files: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">nano</span> <span class="pre">/etc/hosts</span></code></p></li>
+<li><p>Change permissions on system dirs: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">chmod</span> <span class="pre">755</span> <span class="pre">/usr/local/bin</span></code></p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Advanced Tips:</strong></p>
+<ul class="simple">
+<li><p>Run multiple commands: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">bash</span> <span class="pre">-c</span> <span class="pre">&quot;apt</span> <span class="pre">update</span> <span class="pre">&amp;&amp;</span> <span class="pre">apt</span> <span class="pre">upgrade&quot;</span></code></p></li>
+<li><p>Edit sudoers file (carefully): <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">visudo</span></code> to add users or change timeouts.</p></li>
+<li><p>Avoid <code class="docutils literal notranslate"><span class="pre">sudo</span></code> for user files; use it only for system operations.</p></li>
+</ul>
+<p>For coders: Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> when installing compilers, libraries, or configuring development tools, but keep your coding projects in user directories.</p>
+<ul class="simple">
+<li><p>Absolute: <code class="docutils literal notranslate"><span class="pre">/home/user/project/data.csv</span></code></p></li>
+<li><p>Relative: <code class="docutils literal notranslate"><span class="pre">./data/input.txt</span></code> (from project root)</p></li>
+<li><p>Use <code class="docutils literal notranslate"><span class="pre">cd</span></code>, <code class="docutils literal notranslate"><span class="pre">pwd</span></code> to navigate efficiently.</p></li>
+</ul>
+</section>
+</section>
+<section id="essential-commands-for-coding-and-computing">
+<h2>Essential Commands for Coding and Computing<a class="headerlink" href="#essential-commands-for-coding-and-computing" title="Link to this heading">¶</a></h2>
+<section id="file-and-directory-operations">
+<h3>File and Directory Operations<a class="headerlink" href="#file-and-directory-operations" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Task</p></th>
+<th class="head"><p>Command</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>List files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-la</span> <span class="pre">~/project</span></code></p></td>
+<td><p>Shows hidden files, permissions; output like: <code class="docutils literal notranslate"><span class="pre">-rw-r--r--</span> <span class="pre">1</span> <span class="pre">user</span> <span class="pre">group</span> <span class="pre">1024</span> <span class="pre">Jan</span> <span class="pre">27</span> <span class="pre">data.csv</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Navigate</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">~/project/src</span></code></p></td>
+<td><p>Use <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">-</span></code> to go back; <code class="docutils literal notranslate"><span class="pre">cd</span> <span class="pre">..</span></code> up one level</p></td>
+</tr>
+<tr class="row-even"><td><p>Print working directory</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pwd</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">pwd</span></code></p></td>
+<td><p>Shows current full path; useful in scripts: <code class="docutils literal notranslate"><span class="pre">echo</span> <span class="pre">&quot;Current</span> <span class="pre">dir:</span> <span class="pre">$(pwd)&quot;</span></code></p></td>
+</tr>
+<tr class="row-odd"><td><p>Create dirs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">-p</span> <span class="pre">data/results</span></code></p></td>
+<td><p>Creates nested directories; <code class="docutils literal notranslate"><span class="pre">mkdir</span> <span class="pre">models</span> <span class="pre">experiments</span></code> for multiple</p></td>
+</tr>
+<tr class="row-even"><td><p>Copy files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-r</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">-r</span> <span class="pre">src/</span> <span class="pre">backup/</span></code></p></td>
+<td><p>Recursive for directories; <code class="docutils literal notranslate"><span class="pre">cp</span> <span class="pre">*.py</span> <span class="pre">backup/</span></code> copies all Python files</p></td>
+</tr>
+<tr class="row-odd"><td><p>Move/rename</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mv</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">mv</span> <span class="pre">old.py</span> <span class="pre">new.py</span></code></p></td>
+<td><p>Also for renaming; <code class="docutils literal notranslate"><span class="pre">mv</span> <span class="pre">file.txt</span> <span class="pre">/tmp/</span></code> moves to temp</p></td>
+</tr>
+<tr class="row-even"><td><p>Remove files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rm</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">temp.txt</span></code></p></td>
+<td><p>Deletes files; <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-i</span> <span class="pre">*.log</span></code> prompts before deletion</p></td>
+</tr>
+<tr class="row-odd"><td><p>Remove directories</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-r</span> <span class="pre">old_project/</span></code></p></td>
+<td><p>Recursive delete; <code class="docutils literal notranslate"><span class="pre">rm</span> <span class="pre">-rf</span> <span class="pre">cache/</span></code> forces without prompts (dangerous!)</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Additional Examples:</strong></p>
+<ul class="simple">
+<li><p>Check disk usage: <code class="docutils literal notranslate"><span class="pre">du</span> <span class="pre">-h</span> <span class="pre">~/project</span></code> (shows folder sizes)</p></li>
+<li><p>Find files: <code class="docutils literal notranslate"><span class="pre">find</span> <span class="pre">.</span> <span class="pre">-name</span> <span class="pre">&quot;*.py&quot;</span> <span class="pre">-type</span> <span class="pre">f</span></code> (locate Python files)</p></li>
+<li><p>Create symbolic link: <code class="docutils literal notranslate"><span class="pre">ln</span> <span class="pre">-s</span> <span class="pre">/path/to/target</span> <span class="pre">link_name</span></code> (shortcut to files/dirs)</p></li>
+</ul>
+</section>
+<section id="text-processing-and-data-handling">
+<h3>Text Processing and Data Handling<a class="headerlink" href="#text-processing-and-data-handling" title="Link to this heading">¶</a></h3>
+<p>Scientific computing involves lots of text/data manipulation:</p>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Task</p></th>
+<th class="head"><p>Command</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>View files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">head/tail</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">head</span> <span class="pre">-n</span> <span class="pre">10</span> <span class="pre">data.csv</span></code></p></td>
+<td><p>Preview large files; <code class="docutils literal notranslate"><span class="pre">tail</span> <span class="pre">-f</span> <span class="pre">log.txt</span></code> for live logs</p></td>
+</tr>
+<tr class="row-odd"><td><p>Search text</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grep</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">&quot;error&quot;</span> <span class="pre">log.txt</span></code></p></td>
+<td><p>Find patterns in code/logs; <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">-r</span> <span class="pre">&quot;import&quot;</span> <span class="pre">.</span></code> searches recursively</p></td>
+</tr>
+<tr class="row-even"><td><p>Edit files</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nano/vim</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">nano</span> <span class="pre">script.py</span></code></p></td>
+<td><p>Quick edits; learn Vim for power</p></td>
+</tr>
+<tr class="row-odd"><td><p>Process data</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">awk/sed</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">awk</span> <span class="pre">'{sum+=$1}</span> <span class="pre">END</span> <span class="pre">{print</span> <span class="pre">sum}'</span> <span class="pre">data.txt</span></code></p></td>
+<td><p>Simple data analysis; <code class="docutils literal notranslate"><span class="pre">sed</span> <span class="pre">'s/old/new/g'</span> <span class="pre">file.txt</span></code> replaces text</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>Filter CSV rows: <code class="docutils literal notranslate"><span class="pre">grep</span> <span class="pre">&quot;^[^#]&quot;</span> <span class="pre">data.csv</span> <span class="pre">|</span> <span class="pre">head</span> <span class="pre">-20</span></code> (skip comments, show first 20)</p></li>
+<li><p>Count lines: <code class="docutils literal notranslate"><span class="pre">wc</span> <span class="pre">-l</span> <span class="pre">*.py</span></code> (count lines in Python files)</p></li>
+<li><p>Extract columns: <code class="docutils literal notranslate"><span class="pre">cut</span> <span class="pre">-d','</span> <span class="pre">-f2</span> <span class="pre">data.csv</span> <span class="pre">|</span> <span class="pre">sort</span> <span class="pre">|</span> <span class="pre">uniq</span> <span class="pre">-c</span></code> (count unique values in column 2)</p></li>
+</ul>
+</section>
+<section id="running-code-and-processes">
+<h3>Running Code and Processes<a class="headerlink" href="#running-code-and-processes" title="Link to this heading">¶</a></h3>
+<div class="table-wrapper colwidths-auto docutils container">
+<table class="docutils align-default">
+<thead>
+<tr class="row-odd"><th class="head"><p>Task</p></th>
+<th class="head"><p>Command</p></th>
+<th class="head"><p>Example</p></th>
+<th class="head"><p>Notes</p></th>
+</tr>
+</thead>
+<tbody>
+<tr class="row-even"><td><p>Run script</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">./script.sh</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">main.py</span></code></p></td>
+<td><p>Execute Python/R scripts; <code class="docutils literal notranslate"><span class="pre">./train.sh</span></code> for custom scripts</p></td>
+</tr>
+<tr class="row-odd"><td><p>Background jobs</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">&amp;</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">train.py</span> <span class="pre">&amp;</span></code></p></td>
+<td><p>Run long computations in background; use <code class="docutils literal notranslate"><span class="pre">jobs</span></code> to list</p></td>
+</tr>
+<tr class="row-even"><td><p>Check processes</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">ps/top</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">top</span></code></p></td>
+<td><p>Monitor CPU/memory usage; `ps aux</p></td>
+</tr>
+<tr class="row-odd"><td><p>Kill process</p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kill</span></code></p></td>
+<td><p><code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">%1</span></code></p></td>
+<td><p>Stop runaway jobs; <code class="docutils literal notranslate"><span class="pre">kill</span> <span class="pre">-9</span> <span class="pre">PID</span></code> forces kill</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>Run with arguments: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">script.py</span> <span class="pre">--input</span> <span class="pre">data.csv</span> <span class="pre">--output</span> <span class="pre">results.txt</span></code></p></li>
+<li><p>Monitor GPU: <code class="docutils literal notranslate"><span class="pre">nvidia-smi</span></code> (if NVIDIA GPU installed)</p></li>
+<li><p>Batch run: <code class="docutils literal notranslate"><span class="pre">for</span> <span class="pre">file</span> <span class="pre">in</span> <span class="pre">*.py;</span> <span class="pre">do</span> <span class="pre">python</span> <span class="pre">$file;</span> <span class="pre">done</span></code> (run all Python scripts in directory)</p></li>
+</ul>
+</section>
+<section id="package-management">
+<h3>Package Management<a class="headerlink" href="#package-management" title="Link to this heading">¶</a></h3>
+<p>Install tools for coding and computing:</p>
+<ul class="simple">
+<li><p><strong>System Packages</strong>: <code class="docutils literal notranslate"><span class="pre">apt/yum</span></code> for compilers, libraries.</p>
+<ul>
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">sudo</span> <span class="pre">apt</span> <span class="pre">install</span> <span class="pre">build-essential</span> <span class="pre">python3-dev</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Language-Specific</strong>: Use <code class="docutils literal notranslate"><span class="pre">pip</span></code> (Python), <code class="docutils literal notranslate"><span class="pre">install.packages</span></code> (R), or <code class="docutils literal notranslate"><span class="pre">conda</span></code> for environments.</p>
+<ul>
+<li><p>Conda is great for scientific computing: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">numpy</span> <span class="pre">scipy</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Version Control</strong>: <code class="docutils literal notranslate"><span class="pre">git</span></code> for code management.</p>
+<ul>
+<li><p><code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code>, <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">commit</span></code>, etc.</p></li>
+</ul>
+</li>
+</ul>
+<p><strong>Examples:</strong></p>
+<ul class="simple">
+<li><p>Install scientific stack: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">install</span> <span class="pre">-c</span> <span class="pre">conda-forge</span> <span class="pre">numpy</span> <span class="pre">pandas</span> <span class="pre">matplotlib</span> <span class="pre">scikit-learn</span></code></p></li>
+<li><p>Create environment: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">create</span> <span class="pre">-n</span> <span class="pre">myenv</span> <span class="pre">python=3.9</span> <span class="pre">&amp;&amp;</span> <span class="pre">conda</span> <span class="pre">activate</span> <span class="pre">myenv</span></code></p></li>
+<li><p>Install from requirements: <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span> <span class="pre">-r</span> <span class="pre">requirements.txt</span></code></p></li>
+<li><p>Update all: <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">update</span> <span class="pre">--all</span></code> or <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">list</span> <span class="pre">--outdated</span></code></p></li>
+</ul>
+</section>
+</section>
+<section id="advanced-tips-for-coders">
+<h2>Advanced Tips for Coders<a class="headerlink" href="#advanced-tips-for-coders" title="Link to this heading">¶</a></h2>
+<ol class="arabic">
+<li><p><strong>Shell Scripting</strong>: Automate repetitive tasks.</p>
+<ul class="simple">
+<li><p>Example: Write a script to preprocess data and run analysis.</p></li>
+</ul>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="ch">#!/bin/bash</span>
+<span class="c1"># Backup and run analysis</span>
+cp<span class="w"> </span>data.csv<span class="w"> </span>backup/
+python<span class="w"> </span>analyze.py<span class="w"> </span>data.csv<span class="w"> </span>&gt;<span class="w"> </span>results.log<span class="w"> </span><span class="m">2</span>&gt;<span class="p">&amp;</span><span class="m">1</span>
+<span class="nb">echo</span><span class="w"> </span><span class="s2">&quot;Analysis complete. Check results.log&quot;</span>
+</pre></div>
+</div>
+</li>
+<li><p><strong>Pipes and Redirection</strong>: Chain commands for data pipelines.</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cat</span> <span class="pre">data.txt</span> <span class="pre">|</span> <span class="pre">grep</span> <span class="pre">valid</span> <span class="pre">|</span> <span class="pre">sort</span> <span class="pre">&gt;</span> <span class="pre">clean.txt</span></code></p></li>
+<li><p>Examples: <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">*.csv</span> <span class="pre">|</span> <span class="pre">xargs</span> <span class="pre">wc</span> <span class="pre">-l</span></code> (count lines in all CSVs); <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-c</span> <span class="pre">&quot;print('hello')&quot;</span> <span class="pre">|</span> <span class="pre">tee</span> <span class="pre">output.txt</span></code> (save and display output)</p></li>
+</ul>
+</li>
+<li><p><strong>Environment Variables</strong>: Set paths for tools (e.g., <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PATH=$PATH:/usr/local/bin</span></code>)</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">export</span> <span class="pre">PYTHONPATH=$PYTHONPATH:~/my_modules</span></code> for custom Python modules</p></li>
+</ul>
+</li>
+<li><p><strong>Virtual Environments</strong>: Isolate projects with <code class="docutils literal notranslate"><span class="pre">venv</span></code> or <code class="docutils literal notranslate"><span class="pre">conda</span> <span class="pre">env</span></code>.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">python</span> <span class="pre">-m</span> <span class="pre">venv</span> <span class="pre">myenv</span> <span class="pre">&amp;&amp;</span> <span class="pre">source</span> <span class="pre">myenv/bin/activate</span></code></p></li>
+</ul>
+</li>
+<li><p><strong>Remote Work</strong>: Use <code class="docutils literal notranslate"><span class="pre">ssh</span></code> and <code class="docutils literal notranslate"><span class="pre">scp</span></code> for cloud/HPC computing.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">ssh</span> <span class="pre">user&#64;server.com</span></code> to connect; <code class="docutils literal notranslate"><span class="pre">scp</span> <span class="pre">results.txt</span> <span class="pre">user&#64;server.com:/data/</span></code> to upload</p></li>
+</ul>
+</li>
+<li><p><strong>File Compression</strong>: <code class="docutils literal notranslate"><span class="pre">tar/gzip</span></code> for handling large datasets.</p>
+<ul class="simple">
+<li><p>Example: <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-czf</span> <span class="pre">archive.tar.gz</span> <span class="pre">data/</span></code> compress; <code class="docutils literal notranslate"><span class="pre">tar</span> <span class="pre">-xzf</span> <span class="pre">archive.tar.gz</span></code> extract</p></li>
+</ul>
+</li>
+</ol>
+</section>
+<section id="common-pitfalls-and-solutions">
+<h2>Common Pitfalls and Solutions<a class="headerlink" href="#common-pitfalls-and-solutions" title="Link to this heading">¶</a></h2>
+<ul class="simple">
+<li><p><strong>Permission Denied</strong>: Use <code class="docutils literal notranslate"><span class="pre">sudo</span></code> for system installs (see Superuser Access section); check file permissions with <code class="docutils literal notranslate"><span class="pre">ls</span> <span class="pre">-l</span></code>.</p></li>
+<li><p><strong>Path Issues</strong>: Always use absolute paths in scripts to avoid ambiguity.</p></li>
+<li><p><strong>Memory/CPU Limits</strong>: Monitor with <code class="docutils literal notranslate"><span class="pre">htop</span></code> or <code class="docutils literal notranslate"><span class="pre">top</span></code>; optimize code or use background jobs.</p></li>
+<li><p><strong>Dependencies</strong>: Use requirements.txt or environment.yml for reproducibility; avoid mixing package managers.</p></li>
+</ul>
+</section>
+<section id="summary">
+<h2>Summary<a class="headerlink" href="#summary" title="Link to this heading">¶</a></h2>
+<p>Mastering Linux basics will boost your coding and scientific computing productivity. Focus on the command line, package management, and file handling. Practice by setting up a project, installing tools, and running computations. For deeper learning, explore Shell scripting and tools like Jupyter for interactive computing.</p>
+<div class="admonition-next-steps admonition">
+<p class="admonition-title">Next Steps</p>
+<ul class="simple">
+<li><p>Set up a development environment with VSCode + WSL or native Linux.</p></li>
+<li><p>Learn Python for data science; use Conda/Mamba for package management.</p></li>
+<li><p>Experiment with HPC basics if doing large-scale computing.</p></li>
+</ul>
+</div>
+</section>
+</section>
+
+        </article>
+      </div>
+      <footer>
+        
+        <div class="related-pages">
+          <a class="next-page" href="mambaforge.html">
+              <div class="page-info">
+                <div class="context">
+                  <span>Next</span>
+                </div>
+                <div class="title">Python Environment: Miniforge</div>
+              </div>
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+            </a>
+          <a class="prev-page" href="wsl.html">
+              <svg class="furo-related-icon"><use href="#svg-arrow-right"></use></svg>
+              <div class="page-info">
+                <div class="context">
+                  <span>Previous</span>
+                </div>
+                
+                <div class="title">Windows Subsystem for Linux (WSL)</div>
+                
+              </div>
+            </a>
+        </div>
+        <div class="bottom-of-page">
+          <div class="left-details">
+            <div class="copyright">
+                Copyright &#169; 2022, Mijian Xu
+            </div>
+            Made with <a href="https://www.sphinx-doc.org/">Sphinx</a> and <a class="muted-link" href="https://pradyunsg.me">@pradyunsg</a>'s
+            
+            <a href="https://github.com/pradyunsg/furo">Furo</a>
+            <div class="last-updated">
+              Last updated on 25/03/2026</div>
+          </div>
+          <div class="right-details">
+            
+          </div>
+        </div>
+        
+      </footer>
+    </div>
+    <aside class="toc-drawer">
+      
+      
+      <div class="toc-sticky toc-scroll">
+        <div class="toc-title-container">
+          <span class="toc-title">
+            On this page
+          </span>
+        </div>
+        <div class="toc-tree-container">
+          <div class="toc-tree">
+            <ul>
+<li><a class="reference internal" href="#">Linux Basics</a><ul>
+<li><a class="reference internal" href="#introduction">Introduction</a></li>
+<li><a class="reference internal" href="#why-linux-for-coding-and-scientific-computing">Why Linux for Coding and Scientific Computing?</a></li>
+<li><a class="reference internal" href="#basic-linux-operating-logic">Basic Linux Operating Logic</a><ul>
+<li><a class="reference internal" href="#kernel-and-user-space">Kernel and User Space</a></li>
+<li><a class="reference internal" href="#shell-and-command-line">Shell and Command Line</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#file-management-for-coders">File Management for Coders</a><ul>
+<li><a class="reference internal" href="#directory-structure">Directory Structure</a></li>
+<li><a class="reference internal" href="#file-permissions">File Permissions</a></li>
+<li><a class="reference internal" href="#superuser-access-with-sudo">Superuser Access with sudo</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#essential-commands-for-coding-and-computing">Essential Commands for Coding and Computing</a><ul>
+<li><a class="reference internal" href="#file-and-directory-operations">File and Directory Operations</a></li>
+<li><a class="reference internal" href="#text-processing-and-data-handling">Text Processing and Data Handling</a></li>
+<li><a class="reference internal" href="#running-code-and-processes">Running Code and Processes</a></li>
+<li><a class="reference internal" href="#package-management">Package Management</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#advanced-tips-for-coders">Advanced Tips for Coders</a></li>
+<li><a class="reference internal" href="#common-pitfalls-and-solutions">Common Pitfalls and Solutions</a></li>
+<li><a class="reference internal" href="#summary">Summary</a></li>
+</ul>
+</li>
+</ul>
+
+          </div>
+        </div>
+      </div>
+      
+      
+    </aside>
+  </div>
+</div><script src="../../_static/documentation_options.js?v=5929fcd5"></script>
+    <script src="../../_static/doctools.js?v=fd6eb6e6"></script>
+    <script src="../../_static/sphinx_highlight.js?v=6ffebe34"></script>
+    <script src="../../_static/scripts/furo.js?v=46bd48cc"></script>
+    <script src="../../_static/clipboard.min.js?v=a7894cd8"></script>
+    <script src="../../_static/copybutton.js?v=30646c52"></script>
+    <script src="/home/runner/micromamba/envs/docs/lib/python3.12/site-packages/sphinxcontrib/icon/node_modules/@fortawesome/fontawesome-free/js/all.min.js?v=ec35c6c9"></script>
+    <script src="../../_static/design-tabs.js?v=f930bc37"></script>
+    </body>
+</html>

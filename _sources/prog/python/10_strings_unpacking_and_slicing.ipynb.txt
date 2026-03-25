@@ -1,0 +1,133 @@
+{
+    "cells": [
+        {
+            "cell_type": "markdown",
+            "id": "698a34ca",
+            "metadata": {},
+            "source": [
+                "# Python Basics - 10. Strings, Slicing, and Unpacking\n",
+                "\n",
+                "Strings and sequence operations are used everywhere in Python. This notebook covers indexing, slicing, formatting, unpacking, and useful built-in sequence helpers."
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "72e74b2b",
+            "metadata": {
+                "language": "markdown"
+            },
+            "source": [
+                "## Download Notebook\n",
+                "\n",
+                "{download}`Download this notebook <10_strings_unpacking_and_slicing.ipynb>`\n"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "3f981697",
+            "metadata": {},
+            "source": [
+                "## 1. Indexing and Slicing\n",
+                "\n",
+                "Python uses zero-based indexing. Negative indices count from the end."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "9ea45258",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "text = \"Python Language\"\n",
+                "print(text[0])\n",
+                "print(text[-1])\n",
+                "print(text[0:6])\n",
+                "print(text[7:])\n",
+                "print(text[::-1])  # Reverse string"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "166c18f3",
+            "metadata": {},
+            "source": [
+                "## 2. String Formatting\n",
+                "\n",
+                "f-strings are the modern and readable way to format output."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "3b20cf97",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "name = \"Alice\"\n",
+                "score = 93.4567\n",
+                "print(f\"Student: {name}, score: {score:.2f}\")\n",
+                "print(f\"Binary of 10 is {10:b}, hex is {10:x}\")"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "fdbc9bbe",
+            "metadata": {},
+            "source": [
+                "## 3. Sequence Unpacking\n",
+                "\n",
+                "Unpacking assigns elements from a sequence into multiple variables in one statement."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "bedd78a7",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "point = (10, 20)\n",
+                "x, y = point\n",
+                "print(f\"x={x}, y={y}\")\n",
+                "\n",
+                "numbers = [1, 2, 3, 4, 5]\n",
+                "first, *middle, last = numbers\n",
+                "print(first, middle, last)"
+            ]
+        },
+        {
+            "cell_type": "markdown",
+            "id": "144f80e8",
+            "metadata": {},
+            "source": [
+                "## 4. `zip`, `enumerate`, and `sorted`\n",
+                "\n",
+                "These helpers are frequently used in clean Python code."
+            ]
+        },
+        {
+            "cell_type": "code",
+            "execution_count": null,
+            "id": "fa2468ef",
+            "metadata": {},
+            "outputs": [],
+            "source": [
+                "names = [\"Alice\", \"Bob\", \"Cara\"]\n",
+                "scores = [90, 85, 95]\n",
+                "\n",
+                "for idx, (name, score) in enumerate(zip(names, scores), start=1):\n",
+                "    print(f\"{idx}. {name}: {score}\")\n",
+                "\n",
+                "print(sorted(names, reverse=True))"
+            ]
+        }
+    ],
+    "metadata": {
+        "language_info": {
+            "name": "python"
+        }
+    },
+    "nbformat": 4,
+    "nbformat_minor": 5
+}
